@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,12 +13,12 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-3.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../design/css/profile.css">
 
     <style>
-        #doctor-especialidad {
+        #doctor-asociado {
             width: 100%; /* Ajusta el ancho */
             height: 100px; /* Ajusta la altura */
             overflow-y: auto; /* Permite el desplazamiento si hay muchas opciones */
@@ -33,7 +32,7 @@
 
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="profileDC.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="profileUser.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <img src="../../design/img/logo_only.png" alt="TechMedic Logo" class="img-fluid">
                 </div>
@@ -43,55 +42,47 @@
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
-                <a class="nav-link" href="profileDC.html">
-                    <i class="fa-solid fa-user-doctor"></i>
+                <a class="nav-link" href="profileUser.html">
+                    <i class="fa-solid fa-user-nurse"></i>
                     <span>Sobre Mi</span></a>
             </li>
 
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="./menu/listpacient.html">
+                <a class="nav-link" href="">
                     <i class="fa-solid fa-hospital-user"></i>
-                    <span>Pacientes</span>
+                    <span>Doctores</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="./menu/listaCitas.html">
-                    <i class="fa-solid fa-hospital-user"></i>
-                    <span>Citas</span>
-                </a>
+                <a class="nav-link" href="./menu/listaCitas-asis.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Citas</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa-solid fa-stethoscope"></i>
-                    <span>Historial Clínico</span>
-                </a>
+                <a class="nav-link" href="./menu/listpacient-asis.html">
+                    <i class="fa-solid fa-bed"></i>
+                    <span>Pacientes</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="./menu/calendarAsis.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Calendario</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
                     <i class="fa-regular fa-envelope"></i>
                     <span>Mensajería</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="./menu/calendar.html">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span>Calendario</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <span>Permisos</span></a>
-            </li>
-
-               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="">
                     <i class="fa-solid fa-circle-info"></i>
                     <span>Informaciones</span></a>
             </li>
@@ -108,7 +99,7 @@
                     </button>
 
                     <div class="form-container">
-                        <form action="registerPC.html">
+                        <form action="registerPC-asis.html">
                             <div class="input-group">
                                 <button class="btn btn-primary">
                                     <i class="fas fa-user-plus"></i>
@@ -140,7 +131,7 @@
                                 if (searchQuery) {
                                     localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
                                     // Redirigir a la página listPaDcAd.html con el término de búsqueda
-                                    window.location.href = `./menu/listpacient.html`;
+                                    window.location.href = `./menu/listpacient-asis.html`;
                                 }
                             });
                     
@@ -151,7 +142,7 @@
                                     const searchQuery = document.getElementById('searchInput').value.trim();
                                     if (searchQuery) {
                                         localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
-                                        window.location.href = `./menu/listpacient.html`; // Redirigir
+                                        window.location.href = `./menu/listpacient-asis.html`; // Redirigir
                                     }
                                 }
                             });
@@ -182,6 +173,74 @@
                             </div>
                         </li>
 
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <span class="badge badge-danger badge-counter"></span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Notificaciones
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todas las notificaciones</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <span class="badge badge-danger badge-counter"></span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Centro de Mensajes
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="../../design/img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="../../design/img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Leer otros mensajes</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -191,22 +250,24 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profileDC.html">
+                                <a class="dropdown-item" href="profileUser.html">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
-                                <a class="dropdown-item" href="editarDC.html">
+                                <a class="dropdown-item" href="editarUser.html">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Configuración
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logoutModal" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Salir
                                 </a>
                             </div>
-                        </li>                 
+                        </li>
+
                     </ul>
+
                 </nav>
    
                 <div class="container-fluid">
@@ -217,7 +278,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Editar Información Personal</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form id="doctor-info-form">
+                                    <form id="asistente-info-form">
                                         <input type="hidden" id="id_usuario">
                                         <h6 class="f-w-600">Datos Personales</h6>
                                         <div class="row">
@@ -274,12 +335,8 @@
                                         <h6 class="f-w-600 mt-4">Datos Profesionales</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="doctor-exequatur" class="f-w-500">Código de Exequatur</label>
-                                                <input type="text" id="doctor-exequatur" class="form-control" value="">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label for="doctor-especialidad" class="f-w-500">Especialidad</label>
-                                                <select id="doctor-especialidad" class="form-control" multiple style="width: 100%; height: 100px;">
+                                                <label for="doctor-asociado" class="f-w-500">Doctores Asociados</label>
+                                                <select id="doctor-asociado" class="form-control" multiple style="width: 100%; height: 100px;">
                                                 </select>
                                             </div>
                                         </div>
@@ -293,10 +350,6 @@
             </div>
         </div>
     </div>
-
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
 
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -336,19 +389,19 @@
                 
         });
     </script>
-    
+
     <script>
         // Lógica que se ejecuta cuando el DOM ha cargado
         document.addEventListener('DOMContentLoaded', async function() {
             const user = JSON.parse(localStorage.getItem('user'));
             console.log(user);
-
+    
             if (user) {
                 // Rellenar datos personales
                 document.querySelectorAll('.user-name').forEach(element => {
                     element.textContent = `${user.nombre} ${user.apellido}`;
                 });
-
+    
                 const fechaNacimiento = new Date(user.fecha_nacimiento).toISOString().split('T')[0];
                 document.getElementById('user-nombre').value = user.nombre;
                 document.getElementById('user-apellido').value = user.apellido;
@@ -361,68 +414,82 @@
                 document.getElementById('user-sexo').value = user.sexo;
                 document.getElementById('user-password').value = user.password;
                 document.getElementById('user-centro_medico').value = user.id_centro_medico;
-
-                if (user.id_tipo_usuario === 2) {
+    
+                if (user.id_tipo_usuario === 3) { // Asistente administrativo
                     try {
-                        const response = await fetch(`/api/doctor/${user.id_usuario}`);
-                        const data = await response.json();
-                        console.log("Datos del doctor: ", data);
-
-                        // Asignar exequatur directamente desde data
-                        document.getElementById('doctor-exequatur').value = data.exequatur;
-
-                        // Obtener todas las especialidades
-                        const especialidadesResponse = await fetch('/api/especialidades');
-                        if (especialidadesResponse.ok) {
-                            const especialidades = await especialidadesResponse.json();
-                            console.log("Especialidades:", especialidades);
-
-                            const especialidadesDoctor = data.especialidades;
-                            console.log("Especialidades del doctor:", especialidadesDoctor);
-
-                            const especialidadesSelect = document.getElementById('doctor-especialidad');
-                            especialidadesSelect.innerHTML = ''; // Limpiar el select
-
-                            // Llenar el select con todas las especialidades
-                            especialidades.forEach(especialidad => {
+                        // Cargar doctores asociados
+                        const doctoresAsociadosResponse = await fetch(`/api/doctoresAsociados/${user.id_usuario}`);
+                        const doctoresAsociados = await doctoresAsociadosResponse.json();
+                        const doctoresAsociadosIds = doctoresAsociados.map(doctor => doctor.id_doctor); // Asumiendo que hay un campo id_doctor
+                
+                        console.log("Doctores asociados:", doctoresAsociados);
+                
+                        // Obtener todos los doctores
+                        const todosDoctoresResponse = await fetch('/api/doctor/doctores');
+                        if (todosDoctoresResponse.ok) {
+                            const doctores = await todosDoctoresResponse.json();
+                            console.log("Todos los doctores: ", doctores);
+                
+                            const doctorSelect = document.getElementById('doctor-asociado');
+                            doctorSelect.innerHTML = ''; // Limpiar el select
+                
+                            // Llenar el select con los doctores disponibles
+                            doctores.forEach(doctor => {
                                 const option = document.createElement('option');
-                                option.value = especialidad.id_especialidad;
-                                option.textContent = especialidad.especialidad;
-
-                                if (especialidadesDoctor.includes(especialidad.especialidad)) {
-                                    option.selected = true;
+                                option.value = doctor.id_doctor;
+                                option.textContent = `${doctor.nombre} ${doctor.apellido}`;
+                
+                                // Marcar la opción si el doctor está asociado
+                                if (doctoresAsociadosIds.includes(doctor.id_doctor)) { // Cambié aquí
+                                    option.selected = true; // Asegúrate de seleccionar el doctor asociado
                                 }
-
-                                especialidadesSelect.appendChild(option);
+                
+                                doctorSelect.appendChild(option);
                             });
                         } else {
-                            console.error('Error al obtener las especialidades');
+                            console.error('Error al obtener los doctores:', todosDoctoresResponse.status, todosDoctoresResponse.statusText);
                         }
-
-                    } catch (error) {
-                    console.error('Error al obtener la información del doctor:', error);
-                    }
-
-                } else {
-                    // Ocultar campos específicos de doctor si no es doctor
-                    document.getElementById('doctor-especialidad').style.display = 'none';
-                    document.getElementById('doctor-exequatur').style.display = 'none';
-                }
                 
+                    } catch (error) {
+                        console.error('Error al obtener los doctores asociados:', error);
+                    }
+                } else {
+                    // Ocultar campos específicos de asistente si no es asistente
+                    document.getElementById('doctores-asociados').style.display = 'none';
+                }                
                 
             } else {
                 window.location.href = 'login.html'; // Redirigir si no hay usuario
             }
         });
-
-        // Lógica para actualizar la información del doctor
-        document.getElementById('doctor-info-form').addEventListener('submit', async function(e) {
+    
+        // Función para llenar el select con los doctores
+        function llenarSelectDoctores(doctores, doctoresAsociadosIds) {
+            const selectDoctores = document.getElementById('doctores-asociados');
+            selectDoctores.innerHTML = ''; // Limpiar el contenedor
+    
+            doctores.forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.id_doctor;
+                option.textContent = `${doctor.nombre} ${doctor.apellido}`;
+                
+                // Marcar la opción si el doctor está asociado
+                if (doctoresAsociadosIds.includes(doctor.id_doctor)) {
+                    option.selected = true;
+                }
+    
+                selectDoctores.appendChild(option);
+            });
+        }
+    
+        // Lógica para actualizar la información del asistente
+        document.getElementById('asistente-info-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-
+    
             const user = JSON.parse(localStorage.getItem('user')); // Obtener los datos del usuario
             console.log(user);
-
-            const doctorData = {
+    
+            const asistenteData = {
                 nombre: document.getElementById('user-nombre').value,
                 apellido: document.getElementById('user-apellido').value,
                 fecha_nacimiento: document.getElementById('user-fecha-nacimiento').value,
@@ -434,23 +501,23 @@
                 usuario: document.getElementById('user-usuario').value,
                 password: document.getElementById('user-password').value,
                 id_centro_medico: document.getElementById('user-centro_medico').value, 
-                exequatur: document.getElementById('doctor-exequatur').value,
-                id_especialidad: Array.from(document.getElementById('doctor-especialidad').selectedOptions).map(option => option.value),
+                // Aquí puedes agregar otros campos que necesites enviar
+                id_doctor: Array.from(document.getElementById('doctor-asociado').selectedOptions).map(option => option.value),
                 estado: true 
             };
-
+    
             try {
                 const response = await fetch(`/api/usuario/${user.id_usuario}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(doctorData)
+                    body: JSON.stringify(asistenteData)
                 });
-
+    
                 if (response.ok) {
-                    localStorage.setItem('user', JSON.stringify({ ...user, ...doctorData }));
-                    window.location.href = 'profileDC.html'; // Recargar la página o redirigir a otra
+                    localStorage.setItem('user', JSON.stringify({ ...user, ...asistenteData }));
+                    window.location.href = 'profileUser.html'; // Recargar la página o redirigir a otra
                 } else {
                     const errorMessage = await response.text(); // Capturar el mensaje de error
                     console.error('Error al actualizar la información:', errorMessage);
@@ -461,9 +528,9 @@
                 alert('Error al enviar la solicitud de actualización.');
             }
         });
-
+    
     </script>
-
+    
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"> </script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -482,4 +549,5 @@
     <script src="../design/js/demo/chart-pie-demo.js"></script>
 
 </body>
+
 </html>

@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: 'tu_secreto',
+  secret: 'tecnologiamedicinal',
   resave: false,
   saveUninitialized: true,
   cookie: {

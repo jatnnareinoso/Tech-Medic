@@ -10,12 +10,12 @@
     <title>TechMedic - Calendario</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-3.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../design/css/menu/all.min.css">
@@ -156,7 +156,7 @@
                                 if (searchQuery) {
                                     localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
                                     // Redirigir a la página listPaDcAd.html con el término de búsqueda
-                                    window.location.href = `listpacient.html`;
+                                    window.location.href = `listpacient-asis.html`;
                                 }
                             });
                     
@@ -167,7 +167,7 @@
                                     const searchQuery = document.getElementById('searchInput').value.trim();
                                     if (searchQuery) {
                                         localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
-                                        window.location.href = `listpacient.html`; // Redirigir
+                                        window.location.href = `listpacient-asis.html`; // Redirigir
                                     }
                                 }
                             });
@@ -275,11 +275,11 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="perfil_doctor.php">
+                                <a class="dropdown-item" href="../profileUser.html">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
-                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                <a class="dropdown-item" href="../editarUser.html">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Configuración
                                 </a>
@@ -603,7 +603,7 @@
                         throw new Error('Error al cerrar sesión');
                     }
                     // Limpiar cualquier dato relacionado con el usuario
-                    window.location.href = 'login.html'; // Redirigir al login
+                    window.location.href = '../login.html'; // Redirigir al login
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -632,21 +632,22 @@
     <script src="../../design/js/demo/demo.js"></script>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"> </script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"> </script>
+    <script src="/vendor/jquery/jquery.min.js"> </script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../design/js/sb-admin-2.min.js"> </script>
+    <script src="/design/js/sb-admin-2.min.js"> </script>
 
     <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="../design/js/demo/chart-area-demo.js"></script>
-    <script src="../design/js/demo/chart-pie-demo.js"></script>
+    <script src="/design/js/demo/chart-area-demo.js"></script>
+    <script src="/design/js/demo/chart-pie-demo.js"></script>
 
 </body>
 </html>

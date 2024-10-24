@@ -10,12 +10,12 @@
     <title>TechMedic - Calendario</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-3.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../design/css/menu/all.min.css">
@@ -32,12 +32,12 @@
         }
 
         #select-doctor, #select-asistente {
-            width: 100%; /* Asegura que el select ocupe todo el ancho disponible */
+            width: 100%; 
             padding: 10px;
-            font-size: 16px; /* Ajusta el tamaño del texto */
+            font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            height: 45px; /* Ajusta la altura */
+            height: 45px; 
             background-color: #fff;
             appearance: none;
             -webkit-appearance: none;
@@ -154,27 +154,23 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
-                            // Manejar el clic del botón de búsqueda
                             document.getElementById('searchButton').addEventListener('click', function (event) {
-                                event.preventDefault(); // Previene cualquier comportamiento predeterminado de submit
+                                event.preventDefault(); 
                     
-                                // Captura el término de búsqueda del input
                                 const searchQuery = document.getElementById('searchInput').value.trim();
                                 if (searchQuery) {
-                                    localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
-                                    // Redirigir a la página listPaDcAd.html con el término de búsqueda
+                                    localStorage.setItem('searchQuery', searchQuery); 
                                     window.location.href = `listpacient.html`;
                                 }
                             });
                     
-                            // Manejar la pulsación de la tecla 'Enter' en el campo de búsqueda
                             document.getElementById('searchInput').addEventListener('keypress', function (e) {
                                 if (e.key === 'Enter') {
-                                    e.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+                                    e.preventDefault(); 
                                     const searchQuery = document.getElementById('searchInput').value.trim();
                                     if (searchQuery) {
-                                        localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
-                                        window.location.href = `listpacient.html`; // Redirigir
+                                        localStorage.setItem('searchQuery', searchQuery); 
+                                        window.location.href = `listpacient.html`; 
                                     }
                                 }
                             });
@@ -282,11 +278,11 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="perfil_doctor.php">
+                                <a class="dropdown-item" href="../profileDC.html">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
-                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                <a class="dropdown-item" href="../editarDC.html">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Configuración
                                 </a>
@@ -397,8 +393,7 @@
         
             document.getElementById('new-event').addEventListener('input', buscarPacientesPorNombre);
             document.getElementById('new-event-cedula').addEventListener('input', buscarPacientesPorCedula);
-        
-            // Evento para agregar la cita
+
             document.getElementById('add-new-event').addEventListener('click', agregarCita);
 
         });
@@ -412,21 +407,20 @@
                 selectDoctor.classList.add('hidden');
                 selectAsistente.classList.remove('hidden');
         
-                const idUsuario = user.id_usuario; // ID del doctor actual
+                const idUsuario = user.id_usuario; 
         
-                // Obtener el id_doctor a partir del id_usuario
                 fetch(`/api/cita/getIdDoctor?id_usuario=${idUsuario}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.id_doctor) {
-                            idDoctor = data.id_doctor; // Asignar el valor a la variable global
+                            idDoctor = data.id_doctor; 
                             console.log('ID Doctor:', idDoctor);
         
                             fetch(`/api/cita/asistentesDoctor?id_doctor=${idDoctor}`)
                                 .then(response => response.json())
                                 .then(asistentes => {
                                     if (Array.isArray(asistentes) && asistentes.length > 0) {
-                                        // Llenar el select con los asistentes
+                                
                                         asistentes.forEach(asistente => {
                                             const option = document.createElement('option');
                                             option.value = asistente.id_usuario;
@@ -434,7 +428,7 @@
                                             selectAsistente.appendChild(option);
                                         });
                                     } else {
-                                        // Si no hay asistentes, usar el ID del doctor como usuario
+                                       
                                         const option = document.createElement('option');
                                         option.value = idUsuario;
                                         option.textContent = `${user.nombre} ${user.apellido} (Doctor)`;
@@ -447,13 +441,12 @@
                         }
                     })
                     .catch(error => console.error('Error al obtener id_doctor:', error));
-            } else if (idTipoUsuario === 3) { // Asistente Administrativo
+            } else if (idTipoUsuario === 3) { 
                 selectAsistente.classList.add('hidden');
                 selectDoctor.classList.remove('hidden');
         
-                const idAsistente = user.id_usuario; // ID del asistente
-        
-                // Obtener doctores asociados al asistente
+                const idAsistente = user.id_usuario; 
+
                 fetch(`/api/cita/doctoresAsistentes?id_usuario=${idAsistente}`)
                     .then(response => response.json())
                     .then(doctores => {
@@ -527,31 +520,27 @@
         }
 
         function seleccionarColor(color) {
-            colorSeleccionado = color; // Actualiza el color seleccionado
-            console.log('Color seleccionado:', colorSeleccionado); // Solo para comprobar
+            colorSeleccionado = color; 
+            console.log('Color seleccionado:', colorSeleccionado); 
         }
         
         function agregarCita() {
-            const idPaciente = document.getElementById('id-paciente').value; // Obtener el ID del paciente
-            const idAsistente = document.getElementById('select-asistente').value; // Seleccionar el asistente (si aplica)
-            const fecha = document.getElementById('new-event-date').value; // Fecha seleccionada
-            const hora = document.getElementById('new-event-time').value; // Hora seleccionada
-            const estado = true; // Estado predeterminado
-            const idCentroMedico = 1; // Centro Médico predeterminado
+            const idPaciente = document.getElementById('id-paciente').value;
+            const idAsistente = document.getElementById('select-asistente').value; 
+            const fecha = document.getElementById('new-event-date').value; 
+            const hora = document.getElementById('new-event-time').value; 
+            const estado = true; 
+            const idCentroMedico = 1; 
         
-            // Validar si se seleccionó un paciente
             if (!idPaciente) {
                 alert('Debe buscar y seleccionar un paciente antes de agregar la cita');
                 return;
             }
         
-            // Unir la fecha y hora
             const fechaHora = `${fecha} ${hora}`;
         
-            // Si no hay asistente, se usará el ID del doctor como usuario
             const idUsuario = idAsistente || idDoctor;
         
-            // Crear el objeto de datos a enviar
             const idCitaData = {
                 id_paciente: idPaciente,
                 id_doctor: idDoctor,
@@ -564,7 +553,6 @@
         
             console.log('Datos enviados:', idCitaData);
         
-            // Realizar la solicitud POST
             fetch('/api/cita/agregarCita', {
                 method: 'POST',
                 headers: {
@@ -611,14 +599,13 @@
         document.getElementById('logoutButton').addEventListener('click', function() {
             fetch('/api/logout', {
                     method: 'POST',
-                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                    credentials: 'include'
                 })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error al cerrar sesión');
                     }
-                    // Limpiar cualquier dato relacionado con el usuario
-                    window.location.href = 'login.html'; // Redirigir al login
+                    window.location.href = '../login.html';
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -646,21 +633,22 @@
     <script src="../../design/js/demo/demo.js"></script>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"> </script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"> </script>
+    <script src="/vendor/jquery/jquery.min.js"> </script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../design/js/sb-admin-2.min.js"> </script>
+    <script src="/design/js/sb-admin-2.min.js"> </script>
 
     <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="../design/js/demo/chart-area-demo.js"></script>
-    <script src="../design/js/demo/chart-pie-demo.js"></script>
+    <script src="/design/js/demo/chart-area-demo.js"></script>
+    <script src="/design/js/demo/chart-pie-demo.js"></script>
 
 </body>
 </html>
