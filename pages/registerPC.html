@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../../design/css/register.css">
+    <title>Registro Paciente</title>
+</head>
+<body>
+    <div class="container">
+        <header>Registrar Paciente</header>
+
+        <form action="/api/registerPaciente" method="POST" id="registrationForm">
+            <div class="form first">
+                <div class="details">
+                    <span class="title">Detalles Personales</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="user">Tipo Paciente</label>
+                            <select id="user" name="userType" required>
+                                <option value="" disabled selected>Seleccione tipo de paciente</option>
+                                <option value="menor">Menor</option>
+                                <option value="adulto">Adulto</option>                            
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="input-field" id="nombreField">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" placeholder="Ingrese su nombre" required>
+                        </div>
+
+                        <div class="input-field" id="apellidoField">
+                            <label>Apellido</label>
+                            <input type="text" name="apellido" placeholder="Ingrese su apellido" required>
+                        </div>
+
+                        <div class="input-field" id="fechaNacimientoField">
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date" name="fecha_nacimiento" placeholder="Ingrese su fecha de nacimiento" required>
+                        </div>
+
+                        <div class="input-field" id="sexoField">
+                            <label for="gender">Sexo</label>
+                            <select id="gender" name="sexo" required>
+                                <option value="" disabled selected>Seleccione su sexo</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro...</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field" id="cedulaField">
+                            <label>Número de Identidad/Pasaporte</label>
+                            <input type="number" name="cedula" placeholder="Ingrese número de indentidad/pasaporte">
+                        </div>
+                        
+                        <div class="input-field" id="nacionalidadField">
+                            <label>Nacionalidad</label>
+                            <input type="text" name="nacionalidad" placeholder="Ingrese la nacionalidad" required>
+                        </div>
+
+                        <div class="input-field" id="ciudadField">
+                            <label>Ciudad</label>
+                            <input type="text" name="ciudad" placeholder="Ingrese la provincia" required>
+                        </div>
+
+                        <div class="input-field" id="direccionField">
+                            <label>Dirección</label>
+                            <input type="text" name="direccion" placeholder="Ingrese su dirección" required>
+                        </div>
+
+                        <div class="input-field" id="telefonoField">
+                            <label>Teléfono</label>
+                            <input type="text" name="telefono" placeholder="Ingresa su teléfono" required>
+                        </div>
+
+                        <div class="input-field" id="celularField">
+                            <label>Celular</label>
+                            <input type="text" name="celular" placeholder="Ingresa su teléfono" required>
+                        </div>
+                        
+                        <div class="input-field">
+                            <label>Correo Electrónico</label>
+                            <input type="email" name="correo" placeholder="Ingrese correo electrónico" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details " id="documentacionTutor">
+                    <span class="title">Documentación Familiar</span>
+
+                    <div class="fields">
+                        <div class="input-field" id="nombreField">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre_familiar" placeholder="Ingrese su nombre" required>
+                        </div>
+
+                        <div class="input-field" id="cedulaField">
+                            <label>Número de Identidad</label>
+                            <input type="number" name="cedula_familiar" placeholder="Ingrese número de indentidad" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Correo Electrónico</label>
+                            <input type="email" name="correo_familiar" placeholder="Ingrese correo electrónico" required>
+                        </div>
+
+                        <div class="input-field" id="telefonoField">
+                            <label>Teléfono</label>
+                            <input type="text" name="telefono_familiar" placeholder="Ingresa su teléfono" required>
+                        </div>
+
+                        <div class="input-field" id="celularField">
+                            <label>Celular</label>
+                            <input type="text" name="celular_familiar" placeholder="Ingresa su teléfono" required>
+                        </div> 
+                    </div>  
+                </div>
+
+                <div class="button-container" type="submit">
+                    <button type="btntext">CREAR PACIENTE</button>
+                </div>
+                
+                <div class="button-container">
+                    <button type="button" onclick="window.history.back();">Atrás</button>
+                </div>
+            </div>   
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userSelect = document.getElementById('user');
+            const cedulaField = document.getElementById('cedulaField');
+            const fields = document.querySelectorAll('.fields');
+            
+            function updateFields() {
+                const userType = userSelect.value;
+
+                if (userType === 'menor') {
+                    cedulaField.style.display = 'none';
+                    cedulaInput.removeAttribute('required');
+                    cedulaInput.value = '';
+
+                } else {
+                    cedulaField.style.display = 'flex'; 
+                    edulaInput.setAttribute('required', 'required');
+                }
+            }
+
+            userSelect.addEventListener('change', updateFields);
+
+            updateFields(); 
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const registrationForm = document.getElementById('registrationForm');
+            
+            registrationForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); 
+
+                const formData = new FormData(registrationForm);
+                const data = Object.fromEntries(formData);
+
+                try {
+                    const response = await fetch('/api/registerPaciente', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        window.location.href = './menu/listpacient.html';
+                    } else {
+                        console.error('Error al registrar el paciente:', result.error);
+                        alert('Error al registrar el paciente: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Error al enviar el formulario:', error);
+                    alert('Hubo un problema al registrar el paciente.');
+                }
+            });
+        });
+    </script> 
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <link rel="stylesheet" href="../../design/css/register.css">
+    <title>Registro Usuario</title>
+
+    <style>
+        .error {
+            color: rgb(255, 255, 255);
+            font-size: 12px;
+        }
+
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        select option:checked {
+            background-color: #5b64b842; /* Cambia el color de fondo cuando está seleccionado */
+            color: black; /* Cambia el color del texto cuando está seleccionado */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>Registrar Usuario</header>
+
+        <form action="/api/register" method="POST" id="registrationForm">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Detalles Personales</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="user">Tipo Usuario</label>
+                            <select id="userType" name="userType" required>
+                                <option value="" disabled selected>Seleccione tipo de usuario</option>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Doctor">Doctor</option>
+                                <option value="Asistente Administrativo">Asistente Administrativo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="input-field" id="nombreField">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" placeholder="Ingrese su nombre" required>
+                        </div>
+
+                        <div class="input-field" id="apellidoField">
+                            <label>Apellido</label>
+                            <input type="text" name="apellido" placeholder="Ingrese su apellido" required>
+                        </div>
+
+                        <div class="input-field" id="fechaNacimientoField">
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date" name="fecha_nacimiento" placeholder="Ingrese su fecha de nacimiento"
+                                required>
+                        </div>
+
+                        <div class="input-field" id="sexoField">
+                            <label for="gender">Sexo</label>
+                            <select id="gender" name="sexo" required>
+                                <option value="" disabled selected>Seleccione su sexo</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro...</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field" id="celularField">
+                            <label>Celular</label>
+                            <input type="text" name="celular" placeholder="Ingresa su celular" required>
+                        </div>
+
+                        <div class="input-field" id="telefonoField">
+                            <label>Teléfono</label>
+                            <input type="text" name="telefono" placeholder="Ingresa su teléfono" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details ID" id="documentacionSection">
+                    <span class="title">Documentación</span>
+
+                    <div class="fields">
+                        <div class="input-field" id="cedulaField">
+                            <label>Número de Identidad</label>
+                            <input type="number" name="cedula" placeholder="Ingrese número de identidad" required>
+                        </div>
+
+                        <div class="input-field" id="exequaturField">
+                            <label>Codigo de Exequatur</label>
+                            <input type="number" name="exequatur" placeholder="Ingrese Exequatur">
+                        </div>
+
+                        <div class="input-field">
+                            <label>Correo Electrónico</label>
+                            <input type="email" name="correo" id="correo" placeholder="Ingrese correo electrónico" required>
+                            <span id="correoError" class="error" style="color: red;"></span> 
+                        </div>
+
+                        <div class="input-field" id="centroMedicoField">
+                            <label>Centro Médico</label>
+                            <select name="id_centro_medico" id="centroMedicoSelect">
+                                <option value="" disabled selected>Seleccione Centro Médico</option>
+                            </select>
+                        </div>
+                        <div id="especialidadDiv" class="input-field" style="display:none;">
+                            <label>Seleccione Especialidades:</label>
+                            <select id="especialidadesSelect" name="id_especialidades" multiple style="width: 100%; height: 100px;">
+                            </select>
+                        </div>
+                        
+                        <div id="doctorDiv" class="input-field" style="display:none;">
+                            <label>Seleccione Doctores:</label>
+                            <select id="doctoresSelect" name="id_doctores" multiple style="width: 100%; height: 100px;">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details password">
+                    <span class="title">Detalles Credenciales</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Usuario</label>
+                            <input type="text" name="usuario" id="usuario" placeholder="Ingrese nombre de usuario" required>
+                            <span id="usuarioError" class="error" style="color: red;"></span> 
+                        </div> 
+                    </div>
+                    <div class="button-container">
+                        <button type="submit">CREAR USUARIO</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userSelect = document.getElementById('userType');
+            const exequaturField = document.getElementById('exequaturField');
+            const especialidadDiv = document.getElementById('especialidadDiv');
+            const centroMedicoSelect = document.getElementById('centroMedicoSelect');
+            const correoField = document.getElementById('correo');
+            const usuarioField = document.getElementById('usuario');
+            const correoError = document.getElementById('correoError');
+            const usuarioError = document.getElementById('usuarioError');
+            const especialidadesSelect = document.getElementById('especialidadesSelect');
+            const doctoresSelect = document.getElementById('doctoresSelect');
+            const doctorDiv = document.getElementById('doctorDiv');
+    
+            // Función para actualizar campos según el tipo de usuario
+            function updateFields() {
+                const userType = userSelect.value;
+    
+                doctorDiv.style.display = 'none';
+    
+                if (userType === 'Doctor') {
+                    exequaturField.style.display = 'block';  // Mostrar campo de exequatur
+                    especialidadDiv.style.display = 'block'; // Mostrar campo de especialidades
+    
+                    fetch('/api/especialidades')
+                        .then(response => response.json())
+                        .then(data => {
+                            especialidadesSelect.innerHTML = ''; // Limpiar opciones existentes
+    
+                            // Crear opciones para cada especialidad
+                            if (Array.isArray(data) && data.length > 0) {
+                                data.forEach(especialidad => {
+                                    const option = document.createElement('option');
+                                    option.value = especialidad.id_especialidad;
+                                    option.textContent = especialidad.especialidad;
+                                    especialidadesSelect.appendChild(option);
+                                });
+                            } else {
+                                console.warn('No se encontraron especialidades');
+                            }
+                        })
+                        .catch(error => console.error('Error al cargar especialidades:', error));
+                        
+                    especialidadesSelect.addEventListener('change', () => {
+                        console.log('Especialidades seleccionadas:', Array.from(especialidadesSelect.selectedOptions).map(option => option.textContent));
+                    });
+
+                } else {
+                    exequaturField.style.display = 'none';
+                    especialidadDiv.style.display = 'none'; 
+                }
+    
+                // Mostrar lista de doctores si es Asistente Administrativo
+                if (userType === 'Asistente Administrativo') {
+                    doctorDiv.style.display = 'block';
+    
+                    fetch('/api/doctor/doctores')
+                        .then(response => response.json())
+                        .then(data => {
+                            doctoresSelect.innerHTML = ''; // Limpiar opciones existentes
+    
+                            // Crear opciones para cada doctor
+                            if (Array.isArray(data) && data.length > 0) {
+                                data.forEach(doctor => {
+                                    const option = document.createElement('option');
+                                    option.value = doctor.id_doctor;
+                                    option.textContent = `${doctor.nombre} ${doctor.apellido}`;
+                                    doctoresSelect.appendChild(option);
+                                });
+                            } else {
+                                console.warn('No se encontraron doctores');
+                            }
+    
+                        }) 
+                        .catch(error => console.error('Error al cargar doctores:', error));
+                    
+                } else {
+                    doctorDiv.style.display = 'none';
+                }
+            }
+    
+            fetch('/api/centros_medicos')
+                .then(response => response.json())
+                .then(data => {
+                    centroMedicoSelect.innerHTML = '<option value="" disabled selected>Seleccione Centro Médico</option>';
+                    data.forEach(centro => {
+                        const option = document.createElement('option');
+                        option.value = centro.id_centro_medico;
+                        option.textContent = centro.centro_medico;
+                        centroMedicoSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al cargar centros médicos:', error));
+            
+            // Evento para actualizar los campos cuando se cambie el tipo de usuario
+            userSelect.addEventListener('change', updateFields);
+            updateFields();  // Llamar al cargar la página
+    
+            // Evento de envío de formulario
+            document.getElementById('registrationForm').addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+    
+                // Validar especialidades seleccionadas
+                const especialidadesSeleccionadas = Array.from(especialidadesSelect.selectedOptions).map(option => option.value);
+                if (userSelect.value === 'Doctor' && especialidadesSeleccionadas.length === 0) {
+                    showErrorMessage('Debe seleccionar al menos una especialidad.');
+                    return;
+                }
+                data.id_especialidades = especialidadesSeleccionadas;
+    
+                const doctoresSeleccionados = Array.from(doctoresSelect.selectedOptions).map(option => option.value);
+                if (userSelect.value === 'Asistente Administrativo' && doctoresSeleccionados.length === 0) {
+                    showErrorMessage('Debe seleccionar al menos un doctor.');
+                    return;
+                }
+                data.id_doctores = doctoresSeleccionados;
+    
+                // Validar correo y usuario
+                const correoValido = await validarCorreo(correoField.value);
+                const usuarioValido = await validarUsuario(usuarioField.value);
+    
+                if (correoValido && usuarioValido) {
+                    fetch('/api/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    })
+                    .then(async response => {
+                        const responseData = await response.json();
+                        if (response.ok) {
+                            showSuccessMessage('Usuario registrado correctamente.');
+                            setTimeout(() => {
+                                window.location.href = './menu/listPaDcAd.html';
+                            }, 2000);
+                        } else {
+                            showErrorMessage('Error al registrar el usuario: ' + (responseData.message || 'Error desconocido'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al registrar el usuario:', error);
+                        showErrorMessage('Error al registrar el usuario. Inténtalo de nuevo más tarde.');
+                    });
+                } else {
+                    showErrorMessage('Por favor, asegúrate de que el correo y el usuario sean únicos.');
+                }
+            });
+        
+            // Funciones para mostrar mensajes
+            function showSuccessMessage(message) {
+                const messageContainer = document.createElement('div');
+                messageContainer.className = 'message success';
+                messageContainer.textContent = message;
+                document.body.appendChild(messageContainer);
+    
+                setTimeout(() => {
+                    messageContainer.remove();
+                }, 5000);
+            }
+    
+            function showErrorMessage(message) {
+                const messageContainer = document.createElement('div');
+                messageContainer.className = 'message error';
+                messageContainer.textContent = message;
+                document.body.appendChild(messageContainer);
+    
+                setTimeout(() => {
+                    messageContainer.remove();
+                }, 5000);
+            }
+    
+            // Funciones para validar correo y usuario
+            async function validarCorreo(correo) {
+                try {
+                    const response = await fetch(`/api/verificar-correo?correo=${correo}`);
+                    const data = await response.json();
+                    if (data.existe) {
+                        correoError.textContent = 'El correo ya está en uso';
+                        return false;
+                    }
+                    correoError.textContent = '';
+                    return true;
+                } catch (error) {
+                    console.error('Error al validar el correo:', error);
+                    return false;
+                }
+            }
+    
+            async function validarUsuario(usuario) {
+                try {
+                    const response = await fetch(`/api/verificar-usuario?usuario=${usuario}`);
+                    const data = await response.json();
+                    if (data.existe) {
+                        usuarioError.textContent = 'El usuario ya está en uso';
+                        return false;
+                    }
+                    usuarioError.textContent = '';
+                    return true;
+                } catch (error) {
+                    console.error('Error al validar el usuario:', error);
+                    return false;
+                }
+            }
+        });
+    </script>        
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,53 @@
+.form-container {
+    margin-top: -10px; /* Ajusta la separación superior del formulario */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: -20px; /* Ajusta el padding a 0 */
+}
+
+.form-container .input-group {
+    width: 100%; /* Cambia a 100% para adaptarse al contenedor */
+    max-width: 400px; /* Anchura máxima del botón */
+    margin-top: 10px; /* Separación superior del botón */
+}
+
+.form-container .input-group button {
+    width: 100%; /* Botón alargado */
+    padding: 12px; /* Aumenta el padding para agrandar el botón */
+    font-size: 15px; /* Tamaño de fuente más grande */
+    background: linear-gradient(to right, #2e59d9, #a09f58);
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container .input-group button i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 18px; /* Tamaño del icono */
+}
+
+.form-container .input-group button:hover {
+    background-color: #2e59d9; /* Color de fondo al pasar el ratón por encima */
+}
+
+/* Consultas de medios para pantallas pequeñas */
+@media (max-width: 600px) {
+    .form-container .input-group button {
+        padding: 10px; /* Ajusta el padding si es necesario */
+    }
+
+    .form-container .input-group button i {
+        margin-right: 0; /* Elimina el margen derecho del icono */
+        font-size: 24px; /* Ajusta el tamaño del icono si es necesario */
+    }
+
+    .form-container .input-group button span {
+        display: none; /* Oculta el texto del botón en pantallas pequeñas */
+    }
+}

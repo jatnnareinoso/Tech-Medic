@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../../design/css/login.css">
+    <title>Inicio Sesión TechMedic</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+            <form id="login-form" action="/api/login" method="POST">
+                <h1>Ingresa a tu cuenta</h1>
+                <span>Ingresa con tu nombre de usuario y Contraseña.</span>
+                <input type="text" name="usuario" placeholder="Nombre de Usuario" required />
+                <input type="password" name="password" placeholder="Contraseña" required />
+                <a href="#">¿Olvidó su contraseña?</a>
+                <button type="submit">Ingresa</button>
+                <div id="error-message" class="error-message"></div>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-right">
+                    <img src="../../design/img/logo.png" style="width: 110px; margin-bottom: 15px;" alt="logo">
+                    <h1>¡Bienvenido a TechMedic!</h1>
+                    <p>Si todavía no tienes una cuenta creada, comunicate con el Administrador de tu Centro de Trabajo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.querySelector('#login-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const usuario = document.querySelector('input[name="usuario"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+        const errorMessageDiv = document.querySelector('#error-message');
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ usuario, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('user', JSON.stringify(data.usuario));
+                window.location.href = data.redirectUrl;
+            } else {
+                errorMessageDiv.textContent = data.error;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            errorMessageDiv.textContent = 'Error en el servidor. Inténtalo nuevamente.';
+        }
+    });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

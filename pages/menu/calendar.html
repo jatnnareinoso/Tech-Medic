@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TechMedic - Calendario</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../design/css/menu/all.min.css">
+    <!-- fullCalendar -->
+    <link rel="stylesheet" href="../../design/css/menu/cd-main.css">
+    <!-- Theme style-->
+    <link rel="stylesheet" href="../../design/css/menu/cd-adminlte.min.css">
+
+    <style>
+      .event-form .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; 
+        }
+
+        #select-doctor, #select-asistente {
+            width: 100%; /* Asegura que el select ocupe todo el ancho disponible */
+            padding: 10px;
+            font-size: 16px; /* Ajusta el tamaño del texto */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            height: 45px; /* Ajusta la altura */
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+            
+    </style>
+
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../profileDC.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="../../design/img/logo.png" alt="TechMedic Logo" class="img-fluid">
+                </div>
+                <div class="sidebar-brand-text mx-3">TechMedic</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+              <a class="nav-link" href="../profileDC.html">
+                  <i class="fa-solid fa-user-doctor"></i>
+                  <span>Sobre Mi</span></a>
+          </li>
+
+          <hr class="sidebar-divider">
+
+          <li class="nav-item">
+              <a class="nav-link" href="../menu/listpacient.html">
+                  <i class="fa-solid fa-hospital-user"></i>
+                  <span>Pacientes</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="../menu/listaCitas.html">
+                  <i class="fa-solid fa-hospital-user"></i>
+                  <span>Citas</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="">
+                  <i class="fa-solid fa-stethoscope"></i>
+                  <span>Consultas</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="">
+                  <i class="fa-regular fa-envelope"></i>
+                  <span>Mensajería</span>
+              </a>
+          </li>
+
+          <li class="nav-item active">
+              <a class="nav-link" href="../menu/calendar.html">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>Calendario</span></a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="">
+                  <i class="fa-solid fa-briefcase"></i>
+                  <span>Permisos</span></a>
+          </li>
+
+             <li class="nav-item">
+              <a class="nav-link" href="">
+                  <i class="fa-solid fa-circle-info"></i>
+                  <span>Informaciones</span></a>
+          </li>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="form-container">
+                        <form action="../registerUser.html">
+                            <div class="input-group">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span class="button-text d-none d-lg-inline">Registrar Usuario</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input id="searchInput" class="form-control bg-light border-0 small" placeholder="Búsqueda Paciente..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="searchButton">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Manejar el clic del botón de búsqueda
+                            document.getElementById('searchButton').addEventListener('click', function (event) {
+                                event.preventDefault(); // Previene cualquier comportamiento predeterminado de submit
+                    
+                                // Captura el término de búsqueda del input
+                                const searchQuery = document.getElementById('searchInput').value.trim();
+                                if (searchQuery) {
+                                    localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
+                                    // Redirigir a la página listPaDcAd.html con el término de búsqueda
+                                    window.location.href = `listpacient.html`;
+                                }
+                            });
+                    
+                            // Manejar la pulsación de la tecla 'Enter' en el campo de búsqueda
+                            document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+                                    const searchQuery = document.getElementById('searchInput').value.trim();
+                                    if (searchQuery) {
+                                        localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
+                                        window.location.href = `listpacient.html`; // Redirigir
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <span class="badge badge-danger badge-counter"></span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Notificaciones
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todas las notificaciones</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <span class="badge badge-danger badge-counter"></span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Centro de Mensajes
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="../../design/img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="../../design/img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Leer otros mensajes</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="user-name mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../design/img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="perfil_doctor.php">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <section class="content">
+                                    <div class="container-fluid">
+                                      <div class="row">
+                                        <div class="col-md-3">
+                                          <div class="sticky-top mb-3">
+                                            <div class="card">
+                                              <div class="card-header">
+                                                <h4 class="card-title">Calendario</h4>
+                                              </div>
+                                              <div class="card-body">
+                                                <div id="external-events">
+                                                    <div class="checkbox">
+                                                      <label for="drop-remove">
+                                                        TechMedic
+                                                      </label>
+                                                    </div>
+                                                  </div>
+                                                <div id="lista-citas" class="mt-3"></div>
+                                              </div>
+                                            </div>
+                                            <div class="card">
+                                              <div class="card-header">
+                                                <h3 class="card-title">Crear Cita</h3>
+                                              </div>
+                                              <div class="card-body">
+                                                <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                                                    <ul class="fc-color-picker" id="color-chooser">
+                                                        <li><a class="text-warning" href="#" onclick="seleccionarColor('text-warning')"><i class="fas fa-square"></i></a></li>
+                                                        <li><a class="text-success" href="#" onclick="seleccionarColor('text-success')"><i class="fas fa-square"></i></a></li>
+                                                        <li><a class="text-danger" href="#" onclick="seleccionarColor('text-danger')"><i class="fas fa-square"></i></a></li>
+                                                        <li><a class="text-muted" href="#" onclick="seleccionarColor('text-muted')"><i class="fas fa-square"></i></a></li>
+                                                    </ul>
+                                               </div>
+                                                <div class="event-form">
+                                                  <div class="input-group">
+                                                    <input id="new-event" type="text" placeholder="Nombre Paciente" oninput="buscarPacientesPorNombre()">
+                                                    <input id="new-event-cedula" type="number" placeholder="Cedula/Pasaporte" oninput="buscarPacientesPorCedula()">
+                                                    <div id="resultadoPacientes" class="absolute z-10 bg-white border border-gray-300 hidden">
+                                                    </div>
+                                                      <input type="hidden" id="id-paciente">
+                                                      <input id="new-event-time" type="time" placeholder="Hora Cita">
+                                                      <input id="new-event-date" type="date" placeholder="Fecha del evento">
+                                                      <select id="select-doctor" class="form-control hidden">
+                                                        <option value="">Selecciona Doctor</option>
+                                                      </select>
+                                                      <select id="select-asistente" class="form-control hidden">
+                                                        <option value="">Selecciona Asistente</option>
+                                                      </select>
+                                            
+                                                      <button id="add-new-event" type="button" class="btn btn-primary">Agregar</button>
+                                                  </div>
+                                                </div>  
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                          <div class="card card-primary">
+                                            <div class="card-body p-0">
+                                              <!-- THE CALENDAR -->
+                                              <div id="calendar"></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </section> 
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let idDoctor = null;
+        let colorSeleccionado = 'text-warning';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const user = JSON.parse(localStorage.getItem('user'));
+        
+            if (user) {
+                document.querySelectorAll('.user-name').forEach(element => {
+                    element.textContent = `${user.nombre} ${user.apellido}`;
+                });
+                configurarFormulario(user.id_tipo_usuario);
+            } else {
+                window.location.href = '../login.html';
+            }
+        
+            document.getElementById('new-event').addEventListener('input', buscarPacientesPorNombre);
+            document.getElementById('new-event-cedula').addEventListener('input', buscarPacientesPorCedula);
+        
+            // Evento para agregar la cita
+            document.getElementById('add-new-event').addEventListener('click', agregarCita);
+
+        });
+        
+        function configurarFormulario(idTipoUsuario) {
+            const selectDoctor = document.getElementById('select-doctor');
+            const selectAsistente = document.getElementById('select-asistente');
+            const user = JSON.parse(localStorage.getItem('user'));
+        
+            if (idTipoUsuario === 2) { // Doctor
+                selectDoctor.classList.add('hidden');
+                selectAsistente.classList.remove('hidden');
+        
+                const idUsuario = user.id_usuario; // ID del doctor actual
+        
+                // Obtener el id_doctor a partir del id_usuario
+                fetch(`/api/cita/getIdDoctor?id_usuario=${idUsuario}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.id_doctor) {
+                            idDoctor = data.id_doctor; // Asignar el valor a la variable global
+                            console.log('ID Doctor:', idDoctor);
+        
+                            fetch(`/api/cita/asistentesDoctor?id_doctor=${idDoctor}`)
+                                .then(response => response.json())
+                                .then(asistentes => {
+                                    if (Array.isArray(asistentes) && asistentes.length > 0) {
+                                        // Llenar el select con los asistentes
+                                        asistentes.forEach(asistente => {
+                                            const option = document.createElement('option');
+                                            option.value = asistente.id_usuario;
+                                            option.textContent = asistente.nombre;
+                                            selectAsistente.appendChild(option);
+                                        });
+                                    } else {
+                                        // Si no hay asistentes, usar el ID del doctor como usuario
+                                        const option = document.createElement('option');
+                                        option.value = idUsuario;
+                                        option.textContent = `${user.nombre} ${user.apellido} (Doctor)`;
+                                        selectAsistente.appendChild(option);
+                                    }
+                                })
+                                .catch(error => console.error('Error al obtener asistentes:', error));
+                        } else {
+                            console.error('No se encontró el ID del doctor:', data);
+                        }
+                    })
+                    .catch(error => console.error('Error al obtener id_doctor:', error));
+            } else if (idTipoUsuario === 3) { // Asistente Administrativo
+                selectAsistente.classList.add('hidden');
+                selectDoctor.classList.remove('hidden');
+        
+                const idAsistente = user.id_usuario; // ID del asistente
+        
+                // Obtener doctores asociados al asistente
+                fetch(`/api/cita/doctoresAsistentes?id_usuario=${idAsistente}`)
+                    .then(response => response.json())
+                    .then(doctores => {
+                        doctores.forEach(doctor => {
+                            const option = document.createElement('option');
+                            option.value = doctor.id_doctor;
+                            option.textContent = `${doctor.nombre} ${doctor.apellido}`;
+                            selectDoctor.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener doctores:', error));
+            }
+        }
+
+
+        function buscarPacientesPorNombre() {
+            const nombre = document.getElementById('new-event').value.trim();
+            if (nombre.length < 2) {
+                mostrarResultados([]);
+                return;
+            }
+        
+            fetch(`/api/buscarPacientesCitas?nombre=${nombre}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Error en la búsqueda por nombre');
+                    return response.json();
+                })
+                .then(data => mostrarResultados(data))
+                .catch(error => console.error('Error:', error));
+        }
+        
+        function buscarPacientesPorCedula() {
+            const cedula = document.getElementById('new-event-cedula').value.trim();
+            if (cedula.length < 2) {
+                mostrarResultados([]);
+                return;
+            }
+        
+            fetch(`/api/buscarPacientesCitas?cedula=${cedula}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Error en la búsqueda por cédula');
+                    return response.json();
+                })
+                .then(data => mostrarResultados(data))
+                .catch(error => console.error('Error:', error));
+        }
+        
+        function mostrarResultados(pacientes) {
+            const resultadosDiv = document.getElementById('resultadoPacientes');
+            resultadosDiv.innerHTML = '';
+            if (pacientes.length > 0) {
+                resultadosDiv.classList.remove('hidden');
+                pacientes.forEach(paciente => {
+                    const div = document.createElement('div');
+                    div.textContent = `${paciente.nombre} - ${paciente.cedula}`;
+                    div.onclick = () => seleccionarPaciente(paciente);
+                    resultadosDiv.appendChild(div);
+                    const idPaciente = paciente.id_paciente;
+                    document.getElementById('id-paciente').value = idPaciente;
+                });
+            } else {
+                resultadosDiv.classList.add('hidden');
+            }
+        }
+        
+        function seleccionarPaciente(paciente) {
+            document.getElementById('new-event').value = paciente.nombre;
+            document.getElementById('new-event-cedula').value = paciente.cedula;
+            document.getElementById('id-paciente').value = paciente.id_paciente;
+            document.getElementById('resultadoPacientes').classList.add('hidden');
+        }
+
+        function seleccionarColor(color) {
+            colorSeleccionado = color; // Actualiza el color seleccionado
+            console.log('Color seleccionado:', colorSeleccionado); // Solo para comprobar
+        }
+        
+        function agregarCita() {
+            const idPaciente = document.getElementById('id-paciente').value; // Obtener el ID del paciente
+            const idAsistente = document.getElementById('select-asistente').value; // Seleccionar el asistente (si aplica)
+            const fecha = document.getElementById('new-event-date').value; // Fecha seleccionada
+            const hora = document.getElementById('new-event-time').value; // Hora seleccionada
+            const estado = true; // Estado predeterminado
+            const idCentroMedico = 1; // Centro Médico predeterminado
+        
+            // Validar si se seleccionó un paciente
+            if (!idPaciente) {
+                alert('Debe buscar y seleccionar un paciente antes de agregar la cita');
+                return;
+            }
+        
+            // Unir la fecha y hora
+            const fechaHora = `${fecha} ${hora}`;
+        
+            // Si no hay asistente, se usará el ID del doctor como usuario
+            const idUsuario = idAsistente || idDoctor;
+        
+            // Crear el objeto de datos a enviar
+            const idCitaData = {
+                id_paciente: idPaciente,
+                id_doctor: idDoctor,
+                id_usuario: idUsuario,
+                id_centro_medico: idCentroMedico,
+                fecha_hora: fechaHora,
+                estado,
+                color: colorSeleccionado
+            };
+        
+            console.log('Datos enviados:', idCitaData);
+        
+            // Realizar la solicitud POST
+            fetch('/api/cita/agregarCita', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(idCitaData)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Error al agregar la cita');
+                return response.json();
+            })
+            .then(data => {
+                console.log('Cita agregada:', data);
+                document.getElementById('new-event').value = '';
+                document.getElementById('new-event-cedula').value = '';
+
+                document.getElementById('select-doctor').value = '';
+                document.getElementById('new-event-date').value = '';
+                document.getElementById('new-event-time').value = '';
+            })
+            .catch(error => console.error('Error:', error));
+        }        
+    </script>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="logoutButton">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cerrar sesión');
+                    }
+                    // Limpiar cualquier dato relacionado con el usuario
+                    window.location.href = 'login.html'; // Redirigir al login
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cerrar sesión.');
+                });
+                
+        });
+    </script>
+    
+    <!-- jQuery -->
+    <script src="../../design/js/jquery/jquery.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="../../design/js/jquery/jquery-ui.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../../design/js/cd-adminlte.min.js"></script>
+
+    <!-- fullCalendar 2.2.5 -->
+    <script src="../../design/js/cd-moment.min.js"></script>
+    <script src="../../design/js/cd-main.js"></script>
+    <script src="../../design/js/cd-main-2.js"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../design/js/demo/demo.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"> </script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../design/js/sb-admin-2.min.js"> </script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../design/js/demo/chart-area-demo.js"></script>
+    <script src="../design/js/demo/chart-pie-demo.js"></script>
+
+</body>
+</html>
+

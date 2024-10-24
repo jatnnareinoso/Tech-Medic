@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TechMedic - Inicio</title>
+    <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../design/css/profile.css">
+
+    <style>
+        #doctor-especialidad {
+            width: 100%; /* Ajusta el ancho */
+            height: 100px; /* Ajusta la altura */
+            overflow-y: auto; /* Permite el desplazamiento si hay muchas opciones */
+            
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="profileDC.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="../../design/img/logo_only.png" alt="TechMedic Logo" class="img-fluid">
+                </div>
+                <div class="sidebar-brand-text mx-3">TechMedic</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="profileDC.html">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <span>Sobre Mi</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link" href="./menu/listpacient.html">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>Pacientes</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="./menu/listaCitas.html">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>Citas</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-stethoscope"></i>
+                    <span>Historial Clínico</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Mensajería</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="./menu/calendar.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Calendario</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Permisos</span></a>
+            </li>
+
+               <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Informaciones</span></a>
+            </li>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="form-container">
+                        <form action="registerPC.html">
+                            <div class="input-group">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span class="button-text d-none d-lg-inline">Registrar Paciente</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input id="searchInput" class="form-control bg-light border-0 small" placeholder="Búsqueda Paciente..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="searchButton">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Manejar el clic del botón de búsqueda
+                            document.getElementById('searchButton').addEventListener('click', function (event) {
+                                event.preventDefault(); // Previene cualquier comportamiento predeterminado de submit
+                    
+                                // Captura el término de búsqueda del input
+                                const searchQuery = document.getElementById('searchInput').value.trim();
+                                if (searchQuery) {
+                                    localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
+                                    // Redirigir a la página listPaDcAd.html con el término de búsqueda
+                                    window.location.href = `./menu/listpacient.html`;
+                                }
+                            });
+                    
+                            // Manejar la pulsación de la tecla 'Enter' en el campo de búsqueda
+                            document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+                                    const searchQuery = document.getElementById('searchInput').value.trim();
+                                    if (searchQuery) {
+                                        localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
+                                        window.location.href = `./menu/listpacient.html`; // Redirigir
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="user-name mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../design/img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="profileDC.html">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="logoutModal" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>                 
+                    </ul>
+                </nav>
+   
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Editar Información Personal</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="doctor-info-form">
+                                        <input type="hidden" id="id_usuario">
+                                        <h6 class="f-w-600">Datos Personales</h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="user-nombre" class="f-w-500">Nombres</label>
+                                                <input type="text" id="user-nombre" class="form-control"  value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-apellido" class="f-w-500">Apellidos</label>
+                                                <input type="text" id="user-apellido" class="form-control"  value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-usuario" class="f-w-500">Usuario</label>
+                                                <input type="text" id="user-usuario" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-fecha-nacimiento" class="f-w-500">Fecha de Nacimiento</label>
+                                                <input type="date" id="user-fecha-nacimiento" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-email" class="f-w-500">Email</label>
+                                                <input type="email" id="user-email" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-celular" class="f-w-500">Celular</label>
+                                                <input type="text" id="user-celular" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-telefono" class="f-w-500">Teléfono</label>
+                                                <input type="text" id="user-telefono" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-cedula" class="f-w-500">Cédula</label>
+                                                <input type="text" id="user-cedula" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="user-sexo" class="f-w-500">Sexo</label>
+                                                <select id="user-sexo" class="form-control">
+                                                    <option value="Masculino">Masculino</option>
+                                                    <option value="Femenino">Femenino</option>
+                                                    <option value="Femenino">Otro</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <h6 class="f-w-600 mt-4">Datos Profesionales</h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="doctor-exequatur" class="f-w-500">Código de Exequatur</label>
+                                                <input type="text" id="doctor-exequatur" class="form-control" value="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="doctor-especialidad" class="f-w-500">Especialidad</label>
+                                                <select id="doctor-especialidad" class="form-control" multiple style="width: 100%; height: 100px;">
+                                                    <!-- Especialidades llenadas dinámicamente -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-4">Guardar Cambios</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="logoutButton">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cerrar sesión');
+                    }
+                    // Limpiar cualquier dato relacionado con el usuario
+                    window.location.href = 'login.html'; // Redirigir al login
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cerrar sesión.');
+                });
+                
+        });
+    </script>
+    
+    <script>
+        // Lógica que se ejecuta cuando el DOM ha cargado
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log(user);
+
+            if (user) {
+                // Rellenar datos personales
+                document.querySelectorAll('.user-name').forEach(element => {
+                    element.textContent = `${user.nombre} ${user.apellido}`;
+                });
+
+                const fechaNacimiento = new Date(user.fecha_nacimiento).toISOString().split('T')[0];
+                document.getElementById('user-nombre').value = user.nombre;
+                document.getElementById('user-apellido').value = user.apellido;
+                document.getElementById('user-email').value = user.correo;
+                document.getElementById('user-usuario').value = user.usuario;
+                document.getElementById('fecha-nacimiento').value = fechaNacimiento;
+                document.getElementById('user-celular').value = user.celular;
+                document.getElementById('user-sexo').value = user.sexo;
+                document.getElementById('user-telefono').value = user.telefono;
+                document.getElementById('user-cedula').value = user.cedula;
+
+                // Verificar si el usuario es un doctor
+                const response = await fetch(`/api/doctor/${user.id_usuario}`);
+                const data = await response.json();
+                console.log("Datos del doctor: ", data);
+
+                // Asignar exequatur directamente desde data
+                document.getElementById('doctor-exequatur').value = data.exequatur;
+
+                // Obtener todas las especialidades
+                const especialidadesResponse = await fetch('/api/especialidades');
+                if (especialidadesResponse.ok) {
+                    const especialidades = await especialidadesResponse.json();
+                    console.log("Especialidades:", especialidades);
+
+                    const especialidadesDoctor = data.especialidades;
+                    console.log("Especialidades del doctor:", especialidadesDoctor);
+
+                    const especialidadesSelect = document.getElementById('doctor-especialidad');
+                    especialidadesSelect.innerHTML = ''; // Limpiar el select
+
+                    // Llenar el select con todas las especialidades
+                    especialidades.forEach(especialidad => {
+                        const option = document.createElement('option');
+                        option.value = especialidad.id_especialidad;
+                        option.textContent = especialidad.especialidad;
+
+                        if (especialidadesDoctor.includes(especialidad.especialidad)) {
+                            option.selected = true;
+                        }
+
+                        especialidadesSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Error al obtener las especialidades');
+                }
+            } else {
+                window.location.href = 'login.html'; // Redirigir si no hay usuario
+            }
+        });
+
+        // Lógica para actualizar la información del doctor
+        document.getElementById('doctor-info-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const user = JSON.parse(localStorage.getItem('user')); // Obtener los datos del usuario
+            console.log(user);
+
+            const doctorData = {
+                nombre: document.getElementById('user-nombre').value,
+                apellido: document.getElementById('user-apellido').value,
+                fecha_nacimiento: document.getElementById('fecha-nacimiento').value,
+                sexo: document.getElementById('user-sexo').value,
+                celular: document.getElementById('user-celular').value,
+                telefono: document.getElementById('user-telefono').value,
+                cedula: document.getElementById('user-cedula').value,
+                correo: document.getElementById('user-email').value,
+                usuario: document.getElementById('user-usuario').value,
+                password: user.password, // Puedes omitir este campo si no lo necesitas
+                id_centro_medico: 1, 
+                exequatur: document.getElementById('doctor-exequatur').value,
+                id_especialidad: Array.from(document.getElementById('doctor-especialidad').selectedOptions).map(option => option.value),
+                estado: true 
+            };
+
+            try {
+                const response = await fetch(`/api/usuario/${user.id_usuario}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(doctorData)
+                });
+
+                if (response.ok) {
+                    location.reload(); // Recargar la página o redirigir a otra
+                } else {
+                    const errorMessage = await response.text(); // Capturar el mensaje de error
+                    console.error('Error al actualizar la información:', errorMessage);
+                    alert(`Error al actualizar la información: ${errorMessage}`);
+                }
+            } catch (error) {
+                console.error('Error al enviar la solicitud:', error);
+                alert('Error al enviar la solicitud de actualización.');
+            }
+        });
+
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"> </script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../design/js/sb-admin-2.min.js"> </script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../design/js/demo/chart-area-demo.js"></script>
+    <script src="../design/js/demo/chart-pie-demo.js"></script>
+
+</body>
+</html>

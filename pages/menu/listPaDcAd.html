@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TechMedic - Lista de Usuarios</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="../../design/css/table.css" rel="stylesheet">
+</head>
+
+<style>
+    .modal {
+        display: none; /* Ocultarlo por defecto */
+        position: fixed;
+        z-index: 1050; /* Asegura que el modal esté encima de otros elementos */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4); /* Color de fondo */
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto; /* Centra el modal en la pantalla */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 140%; /* Ancho del modal */
+        max-width: 800px; /* Establece un ancho máximo para el modal */
+        height: auto; /* Permite que el modal ajuste su altura automáticamente */
+    }
+    
+    .form-control {
+        margin-bottom: 15px; /* Añadir espacio entre los campos */
+        padding: 12px; /* Aumentar el padding para hacer los campos más grandes */
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn {
+        margin-top: 20px; /* Espacio superior para el botón */
+    }
+
+    /* Estilo del botón de buscar */
+    .btn-buscar {
+        z-index: 1000; /* Asegura que el botón esté por debajo del modal */
+        margin-bottom: 20px; /* Espacio inferior para el botón */
+    }
+</style>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../profileAdmin.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="../../design/img/logo_only.png" alt="TechMedic Logo" class="img-fluid">
+                </div>
+                <div class="sidebar-brand-text mx-3">TechMedic</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="../profileAdmin.html">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Sobre Mi</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="listPaDcAd.html">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Accesos</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="especialidades.html">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Especialidades</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Mensajería</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Informaciones</span></a>
+            </li>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="form-container">
+                        <form action="../register.html">
+                            <div class="input-group">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span class="button-text d-none d-lg-inline">Registrar Usuario</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input id="searchInput" class="form-control bg-light border-0 small" placeholder="Búsqueda Usuario..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="searchButton">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>       
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <span class="badge badge-danger badge-counter"></span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Notificaciones
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todas las notificaciones</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <span class="badge badge-danger badge-counter"></span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Centro de Mensajes
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="../../design/img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="../../design/img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Leer otros mensajes</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="user-name mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../design/img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="perfil_doctor.php">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+   
+                <div class="container-fluid">
+                    <h1 class="h3 mb-4 text-gray-800">Perfiles Usuario</h1>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Perfiles Administrador</h6>
+                                </div>
+                                <div class="card-body">
+                                    <main class="h-full pb-16 overflow-y-auto">
+                                        <div class="container grid px-6 mx-auto">
+                                          <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                                            <div class="w-full overflow-x-auto">
+                                              <table class="w-full whitespace-no-wrap">
+                                                <thead>
+                                                  <tr
+                                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                            
+                                                      <th class="px-4 py-2">Nombre</th>
+                                                      <th class="px-4 py-2">Apellido</th>
+                                                      <th class="px-4 py-2">Cédula</th>
+                                                      <th class="px-4 py-2">Correo</th>
+                                                      <th class="px-4 py-2">Celular</th>
+                                                      <th class="px-4 py-2">Estado</th>
+                                                      <th class="px-4 py-2">Acción</th>
+                                                 </tr>
+                                                </thead>
+                                                <tbody id="tabla-administradores" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                                </tbody>  
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="flex justify-center mt-4">
+                                            <button id="prevAdminButton" class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded" disabled>Anterior</button>
+                                            <button id="nextAdminButton" class="px-4 py-2 bg-gray-300 text-gray-700 rounded">Siguiente</button>
+                                          </div>
+                                    </main>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div class="modal fade hidden" id="editarAdminModal" tabindex="-1" role="dialog" aria-labelledby="editarAdminModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="editarAdminModalLabel">Editar Administrador</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form id="editarAdminForm">
+                                <input type="hidden" id="id_usuario">
+                                <div class="form-group">
+                                    <label for="adminNombre">Nombre</label>
+                                    <input type="text" class="form-control" id="adminNombre" name="nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminApellido">Apellido</label>
+                                    <input type="text" class="form-control" id="adminApellido" name="apellido" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminFechaNacimiento">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="adminFechaNacimiento" name="fecha_nacimiento" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminSexo">Sexo</label>
+                                    <select class="form-control" id="adminSexo" name="sexo" required>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Femenino">Femenino</option>
+                                        <option value="Otro">Otro...</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="adminCelular">Celular</label>
+                                    <input type="text" class="form-control" id="adminCelular" name="celular" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminTelefono">Teléfono</label>
+                                    <input type="text" class="form-control" id="adminTelefono" name="telefono">
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminCedula">Cédula</label>
+                                    <input type="text" class="form-control" id="adminCedula" name="cedula" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminCorreo">Correo</label>
+                                    <input type="email" class="form-control" id="adminCorreo" name="correo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminUsuario">Usuario</label>
+                                    <input type="text" class="form-control" id="adminUsuario" name="usuario" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminPassword">Contraseña</label>
+                                    <input type="password" class="form-control" id="adminPassword" name="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminCentroMedico">Centro Médico</label>
+                                    <select id="adminCentroMedico" class="form-control" name="id_centro_medico" required>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="adminEstado">Estado</label>
+                                    <select class="form-control" id="adminEstado">
+                                        <option value="true">Activo</option>
+                                        <option value="false">Inactivo</option>
+                                    </select>
+                                </div>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeAdminModal">Cerrar</button>
+                              <button type="button" class="btn btn-primary" id="saveAdminChanges">Guardar cambios</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Perfiles Doctores</h6>
+                                </div>
+                                <div class="card-body">
+                                    <main class="h-full pb-16 overflow-y-auto">
+                                        <div class="container grid px-6 mx-auto">
+                                          <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                                            <div class="w-full overflow-x-auto">
+                                              <table class="w-full whitespace-no-wrap">
+                                                <thead>
+                                                  <tr
+                                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                
+                                                    <th class="px-4 py-2">Nombre</th>
+                                                    <th class="px-4 py-2">Apellido</th>
+                                                    <th class="px-4 py-2">Cédula</th>
+                                                    <th class="px-4 py-2">Correo</th>
+                                                    <th class="px-4 py-2">Celular</th>
+                                                    <th class="px-4 py-2">Especialidad</th>
+                                                    <th class="px-4 py-2">Exequatur</th>
+                                                    <th class="px-4 py-2">Estado</th>
+                                                    <th class="px-4 py-2">Acción</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="tabla-doctores" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                                </tbody>  
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="flex justify-center mt-4">
+                                            <button id="prevDocButton" class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded" disabled>Anterior</button>
+                                            <button id="nextDocButton" class="px-4 py-2 bg-gray-300 text-gray-700 rounded">Siguiente</button>
+                                          </div>
+                                    </main>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div class="modal fade hidden" id="editarDrModal" tabindex="-1" role="dialog" aria-labelledby="editarDrModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editarDrModalLabel">Editar Doctor</h5>
+                            </div>
+                            <div class="modal-body">
+                              <form id="editarDrForm">
+                                  <input type="hidden" id="id_usuario">
+                                  <div class="form-group">
+                                      <label for="drNombre">Nombre</label>
+                                      <input type="text" class="form-control" id="drNombre" name="nombre" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drApellido">Apellido</label>
+                                      <input type="text" class="form-control" id="drApellido" name="apellido" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drFechaNacimiento">Fecha de Nacimiento</label>
+                                      <input type="date" class="form-control" id="drFechaNacimiento" name="fecha_nacimiento" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drSexo">Sexo</label>
+                                      <select class="form-control" id="drSexo" name="sexo" required>
+                                          <option value="Masculino">Masculino</option>
+                                          <option value="Femenino">Femenino</option>
+                                          <option value="Otro">Otro...</option>
+                                      </select>
+                                  </div>
+  
+                                  <div class="form-group">
+                                      <label for="drCelular">Celular</label>
+                                      <input type="text" class="form-control" id="drCelular" name="celular" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drTelefono">Teléfono</label>
+                                      <input type="text" class="form-control" id="drTelefono" name="telefono">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drCedula">Cédula</label>
+                                      <input type="text" class="form-control" id="drCedula" name="cedula" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drCorreo">Correo</label>
+                                      <input type="email" class="form-control" id="drCorreo" name="correo" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drUsuario">Usuario</label>
+                                      <input type="text" class="form-control" id="drUsuario" name="usuario" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="drPassword">Contraseña</label>
+                                      <input type="password" class="form-control" id="drPassword" name="password" required>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="drCentroMedico">Centro Médico</label>
+                                    <select id="drCentroMedico" class="form-control" name="id_centro_medico" required>
+                                    </select>
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="drEspecialidad">Especialidad</label>
+                                    <div id="especialidadCheckboxes">
+                                 </div>
+                                
+                                  <div class="form-group">
+                                    <label for="drExequatur">Exequatur</label>
+                                    <input type="text" class="form-control" id="drExequatur" name="exequatur" required>
+                                  </div>
+
+                                  <div class="form-group col-md-3">
+                                      <label for="drEstado">Estado</label>
+                                      <select class="form-control" id="drEstado">
+                                          <option value="true">Activo</option>
+                                          <option value="false">Inactivo</option>
+                                      </select>
+                                  </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDrModal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="saveDrChanges">Guardar cambios</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Perfiles Asistente Administrativo</h6>
+                                </div>
+                                <div class="card-body">
+                                    <main class="h-full pb-16 overflow-y-auto">
+                                        <div class="container grid px-6 mx-auto">
+                                          <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                                            <div class="w-full overflow-x-auto">
+                                              <table class="w-full whitespace-no-wrap">
+                                                <thead>
+                                                  <tr
+                                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                    
+                                                      <th class="px-4 py-3">Nombre</th>
+                                                      <th class="px-4 py-3">Apellido</th>
+                                                      <th class="px-4 py-3">Cédula</th>
+                                                      <th class="px-4 py-3">Correo</th>
+                                                      <th class="px-4 py-3">Celular</th>
+                                                      <th class="px-4 py-3">Estado</th>
+                                                      <th class="px-4 py-3">Acción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tabla-asistentes" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                                </tbody>  
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </main>
+                                    <div class="flex justify-center mt-4">
+                                        <button id="prevAsistButton" class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded" disabled>Anterior</button>
+                                        <button id="nextAsistButton" class="px-4 py-2 bg-gray-300 text-gray-700 rounded">Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div class="modal fade hidden" id="editarAsisModal" tabindex="-1" role="dialog" aria-labelledby="editarAsisModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editarAsisModalLabel">Editar Asistente Administrativo</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <form id="editarAsisForm">
+                                  <input type="hidden" id="id_usuario">
+                                  <div class="form-group">
+                                      <label for="asisNombre">Nombre</label>
+                                      <input type="text" class="form-control" id="asisNombre" name="nombre" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisApellido">Apellido</label>
+                                      <input type="text" class="form-control" id="asisApellido" name="apellido" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisFechaNacimiento">Fecha de Nacimiento</label>
+                                      <input type="date" class="form-control" id="asisFechaNacimiento" name="fecha_nacimiento" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisSexo">Sexo</label>
+                                      <select class="form-control" id="asisSexo" name="sexo" required>
+                                          <option value="Masculino">Masculino</option>
+                                          <option value="Femenino">Femenino</option>
+                                          <option value="Otro">Otro...</option>
+                                      </select>
+                                  </div>
+  
+                                  <div class="form-group">
+                                      <label for="asisCelular">Celular</label>
+                                      <input type="text" class="form-control" id="asisCelular" name="celular" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisTelefono">Teléfono</label>
+                                      <input type="text" class="form-control" id="asisTelefono" name="telefono">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisCedula">Cédula</label>
+                                      <input type="text" class="form-control" id="asisCedula" name="cedula" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisCorreo">Correo</label>
+                                      <input type="email" class="form-control" id="asisCorreo" name="correo" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisUsuario">Usuario</label>
+                                      <input type="text" class="form-control" id="asisUsuario" name="usuario" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="asisPassword">Contraseña</label>
+                                      <input type="password" class="form-control" id="asisPassword" name="password" required>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="asisCentroMedico">Centro Médico</label>
+                                    <select id="asisCentroMedico" class="form-control" name="id_centro_medico" required>
+                                    </select>
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="asisDoctor">Doctor Asociado</label>
+                                    <div id="doctorCheckboxes">
+                                 </div>
+
+                                  <div class="form-group col-md-3">
+                                      <label for="asisEstado">Estado</label>
+                                      <select class="form-control" id="asisEstado">
+                                          <option value="true">Activo</option>
+                                          <option value="false">Inactivo</option>
+                                      </select>
+                                  </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeAsisModal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="saveAsisChanges">Guardar cambios</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', async () => {
+                        let currentPageAdministradores = 1;
+                        let currentPageDoctores = 1;
+                        let currentPageAsistentes = 1;
+                        const recordsPerPage = 5;
+                
+                        let administradores = [];
+                        let doctores = [];
+                        let asistentes = [];
+                        let centrosMedicos = [];
+                
+                        try {
+                            const response = await fetch('/api/usuario');
+                            const perfiles = await response.json();
+                
+                            perfiles.forEach((perfil) => {
+                                if (perfil.id_tipo_usuario === 1) {
+                                    administradores.push(perfil);
+                                } else if (perfil.id_tipo_usuario === 2) {
+                                    doctores.push(perfil);
+                                } else if (perfil.id_tipo_usuario === 3) {
+                                    asistentes.push(perfil);
+                                }
+                            });
+              
+                
+                            // Renderizar las primeras páginas
+                            renderAdministradores(currentPageAdministradores);
+                            renderDoctores(currentPageDoctores);
+                            renderAsistentes(currentPageAsistentes);
+                
+                            const centrosResponse = await fetch('/api/centros_medicos');
+                            const centrosMedicos = await centrosResponse.json();
+
+                            // Selecciona ambos selects
+                            const adminCentroMedico = document.getElementById('adminCentroMedico');
+                            const drCentroMedico = document.getElementById('drCentroMedico');
+                            const asisCentroMedico = document.getElementById('asisCentroMedico');
+
+                            // Limpiar las opciones existentes
+                            adminCentroMedico.innerHTML = '';
+                            drCentroMedico.innerHTML = '';
+                            asisCentroMedico.innerHTML = '';
+
+                            // Agrega las opciones a ambos selects
+                            centrosMedicos.forEach(centro_medico => {
+                                const optionAdmin = document.createElement('option');
+                                const optionDr = document.createElement('option');
+                                const optionAsis = document.createElement('option');
+
+                                optionAdmin.value = centro_medico.id_centro_medico;
+                                optionAdmin.text = centro_medico.centro_medico;
+                                adminCentroMedico.appendChild(optionAdmin);
+
+                                optionDr.value = centro_medico.id_centro_medico;
+                                optionDr.text = centro_medico.centro_medico;
+                                drCentroMedico.appendChild(optionDr);
+
+                                optionAsis.value = centro_medico.id_centro_medico;
+                                optionAsis.text = centro_medico.centro_medico;
+                                asisCentroMedico.appendChild(optionAsis);
+                            });
+
+                            
+
+                            console.log('Opciones de Centro Médico:', centrosMedicos);
+                          
+                            // Eventos de navegación para Administradores
+                            document.getElementById('prevAdminButton').addEventListener('click', () => {
+                                if (currentPageAdministradores > 1) {
+                                    currentPageAdministradores--;
+                                    renderAdministradores(currentPageAdministradores);
+                                }
+                            });
+                            document.getElementById('nextAdminButton').addEventListener('click', () => {
+                                if (currentPageAdministradores * recordsPerPage < administradores.length) {
+                                    currentPageAdministradores++;
+                                    renderAdministradores(currentPageAdministradores);
+                                }
+                            });
+                
+                            // Eventos de navegación para Doctores
+                            document.getElementById('prevDocButton').addEventListener('click', () => {
+                                if (currentPageDoctores > 1) {
+                                    currentPageDoctores--;
+                                    renderDoctores(currentPageDoctores);
+                                }
+                            });
+                            document.getElementById('nextDocButton').addEventListener('click', () => {
+                                if (currentPageDoctores * recordsPerPage < doctores.length) {
+                                    currentPageDoctores++;
+                                    renderDoctores(currentPageDoctores);
+                                }
+                            });
+                
+                            // Eventos de navegación para Asistentes
+                            document.getElementById('prevAsistButton').addEventListener('click', () => {
+                                if (currentPageAsistentes > 1) {
+                                    currentPageAsistentes--;
+                                    renderAsistentes(currentPageAsistentes);
+                                }
+                            });
+                            document.getElementById('nextAsistButton').addEventListener('click', () => {
+                                if (currentPageAsistentes * recordsPerPage < asistentes.length) {
+                                    currentPageAsistentes++;
+                                    renderAsistentes(currentPageAsistentes);
+                                }
+                            });
+                        } catch (error) {
+                            console.error('Error al obtener los perfiles:', error);
+                        }
+
+                        const searchQuery = localStorage.getItem('searchQuery');
+                    
+                        if (searchQuery) {
+                            document.getElementById('searchInput').value = searchQuery; // Mostrar el término en el campo de búsqueda
+                            actualizarTabla(searchQuery); // Realiza la búsqueda con el término almacenado
+                        } else {
+                            actualizarTabla(''); // Si no hay búsqueda previa, mostrar la lista completa
+                        }
+                
+                        // Función para actualizar la tabla en base al término de búsqueda
+                        async function actualizarTabla(query) {
+                            try {
+                                console.log(`Buscando usuarios con el término: "${query}"`);
+                
+                                const response = await fetch(`/api/buscarUsuarios?query=${encodeURIComponent(query)}`);
+                                console.log(`Consulta enviada: /api/buscarUsuarios?query=${encodeURIComponent(query)}`);
+                
+                                if (response.ok) {
+                                    const perfiles = await response.json();
+                                    console.log(`Resultados obtenidos: ${JSON.stringify(perfiles)}`);
+                    
+                                    // Filtrar los resultados obtenidos según el tipo de usuario
+                                    const filteredAdministradores = perfiles.filter(perfil => perfil.id_tipo_usuario === 1);
+                                    const filteredDoctores = perfiles.filter(perfil => perfil.id_tipo_usuario === 2);
+                                    const filteredAsistentes = perfiles.filter(perfil => perfil.id_tipo_usuario === 3);
+                                    
+                                    // Actualizar los arrays globales con los usuarios filtrados
+                                    administradores = filteredAdministradores;
+                                    doctores = filteredDoctores;
+                                    asistentes = filteredAsistentes;
+                    
+                                    // Renderizar las tablas con los usuarios filtrados
+                                    renderAdministradores(1);  // Reiniciar a la página 1 al mostrar los resultados
+                                    renderDoctores(1);
+                                    renderAsistentes(1);
+                                } else {
+                                    console.log('Error en la respuesta de la búsqueda: No se encontraron usuarios');
+                                }
+                            } catch (error) {
+                                console.error('Error al buscar usuarios:', error);
+                            }
+                        }
+                
+                        // Para refrescar la tabla en caso de que se haga una nueva búsqueda
+                        document.getElementById('searchButton').addEventListener('click', function (event) {
+                            event.preventDefault(); // Previene el comportamiento predeterminado
+                            const query = document.getElementById('searchInput').value.trim();
+                            actualizarTabla(query); // Llama a actualizarTabla con el nuevo término
+                        });
+                
+                        // Permitir búsqueda también al presionar Enter
+                        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault(); // Evita el envío predeterminado
+                                const query = this.value.trim();
+                                actualizarTabla(query); // Llama a actualizarTabla con el nuevo término
+                            }
+                        });
+
+                        localStorage.removeItem('searchQuery');
+
+                        // Función para renderizar administradores
+                        function renderAdministradores(page) {
+                            const start = (page - 1) * recordsPerPage;
+                            const end = page * recordsPerPage;
+                            const paginaAdministradores = administradores.slice(start, end);
+                
+                            const tablaAdministradores = document.getElementById('tabla-administradores');
+                            tablaAdministradores.innerHTML = ''; // Limpiar tabla
+                
+                            paginaAdministradores.forEach((perfil) => {
+                                const row = createAdminRow(perfil);
+                                tablaAdministradores.appendChild(row);
+                            });
+                
+                            updatePaginationButtons('admin', currentPageAdministradores, administradores.length);
+                        }
+                
+                        // Función para renderizar doctores
+                        function renderDoctores(page) {
+                            const start = (page - 1) * recordsPerPage;
+                            const end = page * recordsPerPage;
+                            const paginaDoctores = doctores.slice(start, end);
+                
+                            const tablaDoctores = document.getElementById('tabla-doctores');
+                            tablaDoctores.innerHTML = ''; // Limpiar tabla
+                
+                            paginaDoctores.forEach((perfil) => {
+                                const row = createDoctorRow(perfil);
+                                tablaDoctores.appendChild(row);
+                            });
+                
+                            updatePaginationButtons('doc', currentPageDoctores, doctores.length);
+                        }
+                
+                        // Función para renderizar asistentes
+                        function renderAsistentes(page) {
+                            const start = (page - 1) * recordsPerPage;
+                            const end = page * recordsPerPage;
+                            const paginaAsistentes = asistentes.slice(start, end);
+                
+                            const tablaAsistentes = document.getElementById('tabla-asistentes');
+                            tablaAsistentes.innerHTML = ''; // Limpiar tabla
+                
+                            paginaAsistentes.forEach((perfil) => {
+                                const row = createAsistenteRow(perfil);
+                                tablaAsistentes.appendChild(row);
+                            });
+                
+                            updatePaginationButtons('asist', currentPageAsistentes, asistentes.length);
+                        }
+                
+                        function createAdminRow(perfil) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="px-4 py-3 text-sm">${perfil.nombre}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.apellido}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.cedula}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.correo}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.celular}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span class="${perfil.estado ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'} px-2 py-1 font-semibold leading-tight rounded-full">
+                                        ${perfil.estado ? 'Activo' : 'Inactivo'}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <button class="edit-admin-btn px-2 py-2 text-sm text-purple-600" data-id-usuario="${perfil.id_usuario}">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                        </svg>
+                                    </button>
+                                </td>
+                            `;
+
+                            row.querySelector('.edit-admin-btn').addEventListener('click', function (event) {
+                                const id_usuario = event.currentTarget.getAttribute('data-id-usuario');
+                                console.log('ID del administrador:', id_usuario); 
+            
+                                const perfil = administradores.find(a => a.id_usuario == id_usuario);
+            
+                                if (perfil) {
+                                    abrirModalEditarAdmin(perfil);
+                                } else {
+                                    console.error('Administrador no encontrado:', id_usuario);
+                                }
+                            });
+
+                            return row;
+
+                        }
+                
+                        function createDoctorRow(perfil) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="px-4 py-3 text-sm">${perfil.nombre}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.apellido}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.cedula}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.correo}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.celular}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.especialidades ? perfil.especialidades.join(', ') : 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.exequatur}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span class="${perfil.estado ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'} px-2 py-1 font-semibold leading-tight rounded-full">
+                                        ${perfil.estado ? 'Activo' : 'Inactivo'}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <button class="edit-dr-btn px-2 py-2 text-sm text-purple-600" data-id-usuario="${perfil.id_usuario}" data-type="doctor">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                        </svg>
+                                    </button>
+                                </td>
+                            `;
+
+                            row.querySelector('.edit-dr-btn').addEventListener('click', function (event) {
+                                const id_usuario = event.currentTarget.getAttribute('data-id-usuario');
+                                console.log('ID del Doctor:', id_usuario); 
+            
+                                const perfil = doctores.find(d => d.id_usuario == id_usuario);
+            
+                                if (perfil) {
+                                    abrirModalEditarDr(perfil);
+                                } else {
+                                    console.error('Doctor no encontrado:', id_usuario);
+                                }
+                            });
+
+                            return row;
+                        }
+                
+                        function createAsistenteRow(perfil) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="px-4 py-3 text-sm">${perfil.nombre}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.apellido}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.cedula}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.correo}</td>
+                                <td class="px-4 py-3 text-sm">${perfil.celular}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span class="${perfil.estado ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'} px-2 py-1 font-semibold leading-tight rounded-full">
+                                        ${perfil.estado ? 'Activo' : 'Inactivo'}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <button class="edit-asis-btn px-2 py-2 text-sm text-purple-600" data-id-usuario="${perfil.id_usuario}" data-type="asistente">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                        </svg>
+                                    </button>
+                                </td>
+                            `;
+                            row.querySelector('.edit-asis-btn').addEventListener('click', function (event) {
+                                const id_usuario = event.currentTarget.getAttribute('data-id-usuario');
+                                console.log('ID del Asistente:', id_usuario); 
+            
+                                const perfil = asistentes.find(a => a.id_usuario == id_usuario);
+            
+                                if (perfil) {
+                                    abrirModalEditarAsis(perfil);
+                                } else {
+                                    console.error('Asistente no encontrado:', id_usuario);
+                                }
+                            });
+
+                            return row;
+                        }
+                
+                        function updatePaginationButtons(type, currentPage, totalItems) {
+                            document.getElementById(`prev${capitalize(type)}Button`).disabled = currentPage === 1;
+                            document.getElementById(`next${capitalize(type)}Button`).disabled = currentPage * recordsPerPage >= totalItems;
+                        }
+                
+                        function capitalize(str) {
+                            return str.charAt(0).toUpperCase() + str.slice(1);
+                        }
+
+                        document.querySelector('.close').addEventListener('click', function () {
+                            document.getElementById('editarDrModal').classList.remove('show');
+                            document.getElementById('editarDrModal').style.display = 'none';
+                        });
+
+                        document.querySelector('.close').addEventListener('click', function () {
+                            document.getElementById('editarAdminModal').classList.remove('show');
+                            document.getElementById('editarAdminModal').style.display = 'none';
+                        });
+
+                        function abrirModalEditarAdmin(perfil) {
+                            if (!perfil) {
+                                console.error('Error: El usuario no está definido');
+                                return;
+                            }
+                
+                            console.log(perfil.password);
+                            const fechaNacimiento = new Date( perfil.fecha_nacimiento).toISOString().split('T')[0];
+                            
+                            document.getElementById('id_usuario').value =  perfil.id_usuario;
+                            document.getElementById('adminNombre').value =  perfil.nombre;
+                            document.getElementById('adminApellido').value =  perfil.apellido;
+                            document.getElementById('adminFechaNacimiento').value = fechaNacimiento;
+                            document.getElementById('adminSexo').value =  perfil.sexo; 
+                            document.getElementById('adminCelular').value =  perfil.celular;
+                            document.getElementById('adminTelefono').value =  perfil.telefono;
+                            document.getElementById('adminCedula').value =  perfil.cedula;
+                            document.getElementById('adminCorreo').value =  perfil.correo; 
+                            document.getElementById('adminUsuario').value =  perfil.usuario;
+                            document.getElementById('adminPassword').value =  perfil.password;
+                            document.getElementById('adminCentroMedico').value =  perfil.id_centro_medico;
+                            document.getElementById('adminEstado').value =  perfil.estado ? 'true' : 'false';
+                
+                            document.getElementById('editarAdminModal').classList.add('show');
+                            document.getElementById('editarAdminModal').style.display = 'block';
+                        }
+
+                        document.getElementById('closeAdminModal').addEventListener('click', function () {
+                            const modal = document.getElementById('editarAdminModal');
+                            modal.classList.remove('show');
+                            modal.style.display = 'none';
+                        });
+
+                        document.getElementById('saveAdminChanges').addEventListener('click', async function (event) {
+                            event.preventDefault();
+                        
+                            const id_usuario = document.getElementById('id_usuario').value;
+                            const datosActualizados = {
+                                nombre: document.getElementById('adminNombre').value,
+                                apellido: document.getElementById('adminApellido').value,
+                                fecha_nacimiento: document.getElementById('adminFechaNacimiento').value,
+                                sexo: document.getElementById('adminSexo').value,
+                                celular: document.getElementById('adminCelular').value,
+                                telefono: document.getElementById('adminTelefono').value,
+                                cedula: document.getElementById('adminCedula').value,
+                                correo: document.getElementById('adminCorreo').value,
+                                usuario: document.getElementById('adminUsuario').value,
+                                password: document.getElementById('adminPassword').value,
+                                id_centro_medico: document.getElementById('adminCentroMedico').value,  // Si la contraseña es generada automáticamente, considera omitir este campo
+                                estado: document.getElementById('adminEstado').value === 'true'  // Conversión correcta a boolean
+                            };
+                        
+                            console.log(id_usuario, datosActualizados)
+                        
+                            try {
+                                const response = await fetch(`/api/usuario/${id_usuario}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(datosActualizados),
+                                });
+                        
+                                if (response.ok) {
+                                    console.log('Administrador actualizado con éxito');
+                                    document.getElementById('editarAdminModal').classList.remove('show');
+                                    document.getElementById('editarAdminModal').style.display = 'none';
+                                    location.reload();  // Recarga la página para reflejar los cambios
+                                } else {
+                                    const errorMessage = await response.text();
+                                    console.error('Error al actualizar el usuario:', errorMessage);
+                                    alert(`Error al actualizar el usuario: ${errorMessage}`);
+                                }
+                        
+                            } catch (error) {
+                                console.error('Error al enviar la solicitud de actualización:', error);
+                            }
+                        });  
+                        
+                        async function abrirModalEditarDr(perfil) {
+                            if (!perfil) {
+                                console.error('Error: El usuario no está definido');
+                                return;
+                            }
+                        
+                            console.log(perfil.id_centro_medico);
+                        
+                            const fechaNacimiento = new Date(perfil.fecha_nacimiento).toISOString().split('T')[0];
+                            document.getElementById('id_usuario').value = perfil.id_usuario;
+                            document.getElementById('drNombre').value = perfil.nombre;
+                            document.getElementById('drApellido').value = perfil.apellido;
+                            document.getElementById('drFechaNacimiento').value = fechaNacimiento;
+                            document.getElementById('drSexo').value = perfil.sexo;
+                            document.getElementById('drCelular').value = perfil.celular;
+                            document.getElementById('drTelefono').value = perfil.telefono;
+                            document.getElementById('drCedula').value = perfil.cedula;
+                            document.getElementById('drCorreo').value = perfil.correo;
+                            document.getElementById('drUsuario').value = perfil.usuario;
+                            document.getElementById('drPassword').value = perfil.password;
+                            document.getElementById('drCentroMedico').value =  perfil.id_centro_medico;
+                            document.getElementById('drEstado').value = perfil.estado ? 'true' : 'false';
+                        
+                            // Hacer fetch a la API para obtener el exequatur y las especialidades
+                            try {
+                                const response = await fetch(`/api/doctor/${perfil.id_usuario}`);
+                                if (response.ok) {
+                                    const doctorData = await response.json();
+                                    console.log("Datos del doctor: ", doctorData);
+                            
+                                    // Asignar exequatur
+                                    document.getElementById('drExequatur').value = doctorData.exequatur;
+                            
+                                    // Obtener todas las especialidades
+                                    const especialidadesResponse = await fetch('/api/especialidades');
+                                    if (especialidadesResponse.ok) {
+                                        const especialidades = await especialidadesResponse.json();
+                                        console.log("Especialidades:", especialidades);
+                            
+                                        // Asignar especialidadesDoctor a un arreglo vacío si no existe
+                                        const especialidadesDoctor = doctorData.especialidades || [];
+                                        llenarCheckboxesEspecialidades(especialidades, especialidadesDoctor);
+                                    } else {
+                                        console.error('Error al obtener las especialidades');
+                                    }
+                                } else {
+                                    console.error('Error al obtener los datos del doctor');
+                                }
+                            } catch (error) {
+                                console.error('Error al hacer la solicitud a la API:', error);
+                            }
+
+                            document.getElementById('editarDrModal').classList.add('show');
+                            document.getElementById('editarDrModal').style.display = 'block';
+                        }
+                        
+                        function llenarCheckboxesEspecialidades(especialidades, especialidadesDoctor) {
+                            const especialidadContainer = document.getElementById('especialidadCheckboxes');
+                            especialidadContainer.innerHTML = ''; // Limpiar opciones anteriores
+                        
+                            especialidades.forEach(especialidad => {
+                                const checkbox = document.createElement('div');
+                                checkbox.classList.add('checkbox-group');
+                        
+                                checkbox.innerHTML = `
+                                    <input type="checkbox" id="${especialidad.id_especialidad}" value="${especialidad.id_especialidad}" 
+                                        ${especialidadesDoctor.includes(especialidad.especialidad) ? 'checked' : ''}>
+                                    <label for="${especialidad.id_especialidad}">${especialidad.especialidad}</label>
+                                `;
+                        
+                                especialidadContainer.appendChild(checkbox);
+                            });
+                        }
+                        
+                        document.getElementById('closeDrModal').addEventListener('click', function () {
+                            const modal = document.getElementById('editarDrModal');
+                            modal.classList.remove('show');
+                            modal.style.display = 'none';
+                        });
+
+                        document.getElementById('saveDrChanges').addEventListener('click', async function (event) {
+                            event.preventDefault();
+                        
+                            const id_usuario = document.getElementById('id_usuario').value;
+                        
+                            // Recoger los datos actualizados
+                            const datosActualizados = {
+                                nombre: document.getElementById('drNombre').value,
+                                apellido: document.getElementById('drApellido').value,
+                                fecha_nacimiento: document.getElementById('drFechaNacimiento').value,
+                                sexo: document.getElementById('drSexo').value,
+                                celular: document.getElementById('drCelular').value,
+                                telefono: document.getElementById('drTelefono').value,
+                                cedula: document.getElementById('drCedula').value,
+                                correo: document.getElementById('drCorreo').value,
+                                usuario: document.getElementById('drUsuario').value,
+                                password: document.getElementById('drPassword').value,
+                                id_centro_medico: document.getElementById('drCentroMedico').value,
+                                // Obtener las especialidades seleccionadas
+                                id_especialidad: Array.from(document.querySelectorAll('#especialidadCheckboxes input[type="checkbox"]:checked')).map(opt => opt.id), 
+                                exequatur: document.getElementById('drExequatur').value,
+                                estado: document.getElementById('drEstado').value === 'true'
+                            };
+                        
+                            console.log(id_usuario, datosActualizados);
+                        
+                            try {
+                                const response = await fetch(`/api/usuario/${id_usuario}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(datosActualizados),
+                                });
+                        
+                                if (response.ok) {
+                                    console.log('Doctor actualizado con éxito');
+                                    document.getElementById('editarDrModal').classList.remove('show');
+                                    document.getElementById('editarDrModal').style.display = 'none';
+                                    location.reload();  
+                                } else {
+                                    const errorMessage = await response.text();
+                                    console.error('Error al actualizar el usuario:', errorMessage);
+                                    alert(`Error al actualizar el usuario: ${errorMessage}`);
+                                }
+                            } catch (error) {
+                                console.error('Error al enviar la solicitud de actualización:', error);
+                            }
+                        });
+
+                        async function abrirModalEditarAsis(perfil) {
+                            if (!perfil) {
+                                console.error('Error: El usuario no está definido');
+                                return;
+                            }
+                            
+                            const fechaNacimiento = new Date(perfil.fecha_nacimiento).toISOString().split('T')[0];
+                            document.getElementById('id_usuario').value = perfil.id_usuario;
+                            document.getElementById('asisNombre').value = perfil.nombre;
+                            document.getElementById('asisApellido').value = perfil.apellido;
+                            document.getElementById('asisFechaNacimiento').value = fechaNacimiento;
+                            document.getElementById('asisSexo').value = perfil.sexo;
+                            document.getElementById('asisCelular').value = perfil.celular;
+                            document.getElementById('asisTelefono').value = perfil.telefono;
+                            document.getElementById('asisCedula').value = perfil.cedula;
+                            document.getElementById('asisCorreo').value = perfil.correo;
+                            document.getElementById('asisUsuario').value = perfil.usuario;
+                            document.getElementById('asisPassword').value = perfil.password;
+                            document.getElementById('asisCentroMedico').value = perfil.id_centro_medico;
+                            document.getElementById('asisEstado').value = perfil.estado ? 'true' : 'false';
+                        
+                            try {
+                                // Obtener doctores asociados
+                                const response = await fetch(`/api/doctoresAsociados/${perfil.id_usuario}`);
+                                if (response.ok) {
+                                    const doctoresAsociados = await response.json();
+                                    console.log("Doctores asociados: ", doctoresAsociados);
+                                    
+                                    // Extraer IDs de doctores asociados
+                                    const doctoresAsociadosIds = doctoresAsociados.map(doctor => doctor.id_doctor);
+
+                                    console.log("IDs de doctores asociados: ", doctoresAsociadosIds);
+
+                                    // Obtener todos los doctores disponibles
+                                    const todosDoctoresResponse = await fetch('/api/doctor/doctores');
+                                    if (todosDoctoresResponse.ok) {
+                                        const doctores = await todosDoctoresResponse.json();
+                                        console.log("Todos los doctores: ", doctores);
+                                        
+                                        // Llenar los checkboxes con los doctores disponibles y marcar los ya asociados
+                                        llenarCheckboxesDoctores(doctores, doctoresAsociadosIds);
+                                    } else {
+                                        console.error('Error al obtener los doctores:', todosDoctoresResponse.status, todosDoctoresResponse.statusText);
+                                    }
+                                } else {
+                                    console.error('Error al obtener los doctores asociados:', response.status, response.statusText);
+                                }   
+
+                            } catch (error) {
+                                console.error('Error al hacer la solicitud a la API:', error);
+                            }
+                        
+                            document.getElementById('editarAsisModal').classList.add('show');
+                            document.getElementById('editarAsisModal').style.display = 'block';
+                        }
+                        
+                        function llenarCheckboxesDoctores(doctores, doctoresAsociadosIds) {
+                            const doctorContainer = document.getElementById('doctorCheckboxes');
+                            doctorContainer.innerHTML = ''; // Limpiar opciones anteriores
+
+                            console.log("Todos los doctores: ", doctores); // Log para ver todos los doctores
+                            console.log("IDs de doctores asociados: ", doctoresAsociadosIds); // Log para ver IDs asociados
+                        
+                            doctores.forEach(doctor => {
+                                const checkbox = document.createElement('div');
+                                checkbox.classList.add('checkbox-group');
+                        
+                                // Verificar si el ID del doctor actual está en los asociados
+                                const isChecked = doctoresAsociadosIds.includes(doctor.id_doctor);
+                                console.log(`Doctor ID: ${doctor.id_doctor}, Checked: ${isChecked}`); // Log para verificar el estado de cada checkbox
+                        
+                                checkbox.innerHTML = `
+                                    <input type="checkbox" id="${doctor.id_doctor}" value="${doctor.id_doctor}" 
+                                        ${isChecked ? 'checked' : ''}>
+                                    <label for="${doctor.id_doctor}">${doctor.nombre} ${doctor.apellido}</label>
+                                `;
+                        
+                                doctorContainer.appendChild(checkbox);
+                            });
+                        }
+                        
+
+                        document.getElementById('closeAsisModal').addEventListener('click', function () {
+                            const modal = document.getElementById('editarAsisModal');
+                            modal.classList.remove('show');
+                            modal.style.display = 'none';
+                        });
+                        
+
+                        document.getElementById('saveAsisChanges').addEventListener('click', async function (event) {
+                            event.preventDefault();
+                        
+                            const id_usuario = document.getElementById('id_usuario').value;
+                        
+                            // Recoger los datos actualizados
+                            const datosActualizados = {
+                                nombre: document.getElementById('asisNombre').value,
+                                apellido: document.getElementById('asisApellido').value,
+                                fecha_nacimiento: document.getElementById('asisFechaNacimiento').value,
+                                sexo: document.getElementById('asisSexo').value,
+                                celular: document.getElementById('asisCelular').value,
+                                telefono: document.getElementById('asisTelefono').value,
+                                cedula: document.getElementById('asisCedula').value,
+                                correo: document.getElementById('asisCorreo').value,
+                                usuario: document.getElementById('asisUsuario').value,
+                                password: document.getElementById('asisPassword').value,
+                                id_centro_medico: document.getElementById('asisCentroMedico').value,
+                                // Obtener los doctores seleccionados
+                                id_doctor: Array.from(document.querySelectorAll('#doctorCheckboxes input[type="checkbox"]:checked')).map(opt => opt.id), 
+                                estado: document.getElementById('asisEstado').value === 'true'
+                            };
+                        
+                            console.log(id_usuario, datosActualizados);
+                            console.log("Datos actualizados:", datosActualizados);
+                            console.log("Doctores seleccionados:", datosActualizados.doctores);
+
+                        
+                            try {
+                                const response = await fetch(`/api/usuario/${id_usuario}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(datosActualizados),
+                                });
+                        
+                                if (response.ok) {
+                                    console.log('Asistente administrativo actualizado con éxito');
+                                    document.getElementById('editarAsisModal').classList.remove('show');
+                                    document.getElementById('editarAsisModal').style.display = 'none';
+                                    location.reload();  
+                                } else {
+                                    const errorMessage = await response.text();
+                                    console.error('Error al actualizar el usuario:', errorMessage);
+                                    alert(`Error al actualizar el usuario: ${errorMessage}`);
+                                }
+                            } catch (error) {
+                                console.error('Error al enviar la solicitud de actualización:', error);
+                            }
+                        });
+
+                        document.getElementById('searchInput').addEventListener('input', async function () {
+                            const query = this.value.trim();
+                            
+                            try {
+                                console.log(`Buscando usuarios con el término: "${query}"`);
+                                
+                                if (query.length > 0) {
+                                    // Realiza la búsqueda si hay texto en el cuadro
+                                    const response = await fetch(`/api/buscarUsuarios?query=${encodeURIComponent(query)}`);
+                                    console.log(`Consulta enviada: /api/buscarUsuarios?query=${encodeURIComponent(query)}`);
+                                    
+                                    if (response.ok) {
+                                        const perfiles = await response.json();
+                                        console.log(`Resultados obtenidos: ${JSON.stringify(perfiles)}`);
+                        
+                                        // Filtrar los resultados obtenidos según el tipo de usuario
+                                        const filteredAdministradores = perfiles.filter(perfil => perfil.id_tipo_usuario === 1);
+                                        const filteredDoctores = perfiles.filter(perfil => perfil.id_tipo_usuario === 2);
+                                        const filteredAsistentes = perfiles.filter(perfil => perfil.id_tipo_usuario === 3);
+                                        
+                                        // Actualizar los arrays globales con los usuarios filtrados
+                                        administradores = filteredAdministradores;
+                                        doctores = filteredDoctores;
+                                        asistentes = filteredAsistentes;
+                        
+                                        // Renderizar las tablas con los usuarios filtrados
+                                        renderAdministradores(1);  // Reiniciar a la página 1 al mostrar los resultados
+                                        renderDoctores(1);
+                                        renderAsistentes(1);
+                                    } else {
+                                        console.log('Error en la respuesta de la búsqueda: No se encontraron usuarios');
+                                    }
+                                } else {
+                                    console.log('No se ingresó ningún término de búsqueda. Restableciendo las listas completas.');
+                        
+                                    // Si el campo de búsqueda está vacío, restablece las listas originales
+                                    const response = await fetch('/api/usuario');
+                                    const perfiles = await response.json();
+                        
+                                    administradores = perfiles.filter(perfil => perfil.id_tipo_usuario === 1);
+                                    doctores = perfiles.filter(perfil => perfil.id_tipo_usuario === 2);
+                                    asistentes = perfiles.filter(perfil => perfil.id_tipo_usuario === 3);
+                        
+                                    // Renderiza las tablas completas de nuevo
+                                    renderAdministradores(currentPageAdministradores);
+                                    renderDoctores(currentPageDoctores);
+                                    renderAsistentes(currentPageAsistentes);
+                                }
+                            } catch (error) {
+                                console.error('Error al buscar usuarios:', error);
+                            }
+                        });
+                   
+                    });
+                </script>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="logoutButton">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cerrar sesión');
+                    }
+                    // Limpiar cualquier dato relacionado con el usuario
+                    window.location.href = 'login.html'; // Redirigir al login
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cerrar sesión.');
+                });
+                
+        });
+    </script>
+                  
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+
+            if (user) {
+                console.log(user); 
+
+                document.querySelectorAll('.user-name').forEach(element => {
+                    element.textContent = `${user.nombre} ${user.apellido}`;
+                });
+
+                document.getElementById('user-email').textContent = user.correo;
+                document.getElementById('user-fecha-nacimiento').textContent = user.fecha_nacimiento;
+                document.getElementById('user-celular').textContent = user.celular;
+                document.getElementById('user-cedula').textContent = user.cedula;
+            } else {
+               
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"> </script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../design/js/sb-admin-2.min.js"> </script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../design/js/demo/chart-area-demo.js"></script>
+    <script src="../design/js/demo/chart-pie-demo.js"></script>
+
+</body>
+</html>

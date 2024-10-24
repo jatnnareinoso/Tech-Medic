@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TechMedic - Lista de Pacientes</title>
+    
+    <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="../../design/css/table.css" rel="stylesheet">
+</head>
+
+<style>
+    /* Estilos para el modal */
+    .modal {
+        display: none; /* Ocultarlo por defecto */
+        position: fixed;
+        z-index: 1050; /* Asegura que el modal esté encima de otros elementos */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4); /* Color de fondo */
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto; /* Centra el modal en la pantalla */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 140%; /* Ancho del modal */
+        max-width: 800px; /* Establece un ancho máximo para el modal */
+        height: auto; /* Permite que el modal ajuste su altura automáticamente */
+    }
+    
+    .form-control {
+        margin-bottom: 15px; /* Añadir espacio entre los campos */
+        padding: 12px; /* Aumentar el padding para hacer los campos más grandes */
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn {
+        margin-top: 20px; /* Espacio superior para el botón */
+    }
+
+    /* Estilo del botón de buscar */
+    .btn-buscar {
+        z-index: 1000; /* Asegura que el botón esté por debajo del modal */
+        margin-bottom: 20px; /* Espacio inferior para el botón */
+    }
+</style>
+
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../profileDC.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="../../design/img/logo_only.png" alt="TechMedic Logo" class="img-fluid">
+                </div>
+                <div class="sidebar-brand-text mx-3">TechMedic</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="../profileDC.html">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <span>Sobre Mi</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="listpacient.html">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>Pacientes</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../menu/listaCitas.html">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>Citas</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-solid fa-stethoscope"></i>
+                    <span>Historial Clínico</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Mensajería</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="calendar.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Calendario</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="inicio_doctor.php">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Permisos</span></a>
+            </li>
+
+               <li class="nav-item">
+                <a class="nav-link" href="inicio_doctor.php">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Informaciones</span></a>
+            </li>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="form-container">
+                        <form action="../registerPC.html">
+                            <div class="input-group">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span class="button-text d-none d-lg-inline">Registrar Paciente</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input id="searchInput" class="form-control bg-light border-0 small" placeholder="Busqueda Paciente..." aria-label="Search" aria-describedby="basic-addon2"
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="searchButton">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="user-name mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../design/img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="perfil_doctor.php">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="container-fluid">
+                    <h1 class="h3 mb-4 text-gray-800">Perfiles</h1>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Perfiles Pacientes</h6>
+                                </div>
+                                <div class="card-body">
+                                    <main class="h-full pb-16 overflow-y-auto">
+                                        <div class="container grid px-6 mx-auto">
+                                            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                                                <div class="w-full overflow-x-auto">
+                                                    <table class="w-full whitespace-no-wrap">
+                                                        <thead>
+                                                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                                <th class="px-4 py-2">Nombre</th>
+                                                                <th class="px-4 py-2">Apellido</th>
+                                                                <th class="px-4 py-3">Cédula</th>
+                                                                <th class="px-4 py-2">Celular</th>
+                                                                <th class="px-4 py-2">Correo</th>
+                                                                <th class="px-4 py-3">Tipo</th>
+                                                                <th class="px-4 py-3">Estatus</th>
+                                                                <th class="px-4 py-3">Acción</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tabla-paciente" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-center mt-4">
+                                                <button id="prevButton" class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded" disabled>Anterior</button>
+                                                <button id="nextButton" class="px-4 py-2 bg-gray-300 text-gray-700 rounded">Siguiente</button>
+                                            </div>
+                                        </div>
+                                    </main>
+                                </div>
+            
+                                <div class="modal fade" id="editarPacienteModal" tabindex="-1" role="dialog" aria-labelledby="editarPacienteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editarPacienteModalLabel">Editar Paciente</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="editarPacienteForm">
+                                                    <input type="hidden" id="id_paciente">
+                                
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarNombre">Nombre</label>
+                                                            <input type="text" class="form-control" id="editarNombre" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarApellido">Apellido</label>
+                                                            <input type="text" class="form-control" id="editarApellido" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCedula">Cédula</label>
+                                                            <input type="text" class="form-control" id="editarCedula" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarFechaNacimiento">Fecha de Nacimiento</label>
+                                                            <input type="date" class="form-control" id="editarFechaNacimiento" required>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCorreo">Correo</label>
+                                                            <input type="email" class="form-control" id="editarCorreo" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarSexo">Sexo</label>
+                                                            <select class="form-control" id="editarSexo" required>
+                                                                <option value="Masculino">Masculino</option>
+                                                                <option value="Femenino">Femenino</option>
+                                                                <option value="Otro">Otro...</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarTelefono">Teléfono</label>
+                                                            <input type="text" class="form-control" id="editarTelefono" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCelular">Celular</label>
+                                                            <input type="text" class="form-control" id="editarCelular" required>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarNacionalidad">Nacionalidad</label>
+                                                            <input type="text" class="form-control" id="editarNacionalidad" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCiudad">Ciudad</label>
+                                                            <input type="text" class="form-control" id="editarCiudad" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarDireccion">Dirección</label>
+                                                            <input type="text" class="form-control" id="editarDireccion" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarMenor">Tipo</label>
+                                                            <select class="form-control" id="editarMenor" required>
+                                                                <option value="true">Menor</option>
+                                                                <option value="false">Adulto</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <!-- Fila 4 -->
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarNomFam">Nombre de Familiar</label>
+                                                            <input type="text" class="form-control" id="editarNomFam" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCedulaFamiliar">Cédula de Familiar</label>
+                                                            <input type="text" class="form-control" id="editarCedulaFamiliar" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCorreoFamiliar">Correo de Familiar</label>
+                                                            <input type="email" class="form-control" id="editarCorreoFamiliar" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarTelefonoFamiliar">Teléfono de Familiar</label>
+                                                            <input type="text" class="form-control" id="editarTelefonoFamiliar" required>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <!-- Fila 5 -->
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarCelularFamiliar">Celular de Familiar</label>
+                                                            <input type="text" class="form-control" id="editarCelularFamiliar" required>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarEstado">Estado</label>
+                                                            <select class="form-control" id="editarEstado">
+                                                                <option value="true">Activo</option>
+                                                                <option value="false">Inactivo</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="editarObservacion">Observación</label>
+                                                            <input type="text" class="form-control" id="editarObservacion" required>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                                                                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', async () => {
+                        let currentPage = 1;
+                        const recordsPerPage = 5;
+                        let perfiles = [];
+                        let allPerfiles = []; // Variable para almacenar todos los pacientes sin filtrar
+
+                        try {
+                            const response = await fetch('/api/pacientes');
+                            perfiles = await response.json();
+                            allPerfiles = [...perfiles]; // Clonar los perfiles originales para tener siempre todos los pacientes
+                            renderPage(currentPage);
+
+                            document.getElementById('prevButton').addEventListener('click', () => {
+                                if (currentPage > 1) {
+                                    currentPage--;
+                                    renderPage(currentPage);
+                                }
+                            });
+                
+                            document.getElementById('nextButton').addEventListener('click', () => {
+                                if (currentPage * recordsPerPage < perfiles.length) {
+                                    currentPage++;
+                                    renderPage(currentPage);
+                                }
+                            });
+                        } catch (error) {
+                            console.error('Error al obtener los perfiles:', error);
+                        }
+
+                        const searchQuery = localStorage.getItem('searchQuery');
+
+                        if (searchQuery) {
+                            document.getElementById('searchInput').value = searchQuery; // Mostrar el término en el campo de búsqueda
+                            actualizarTabla(searchQuery);
+                            localStorage.removeItem('searchQuery'); // Realiza la búsqueda con el término almacenado
+                        } else {
+                            actualizarTabla(''); // Si no hay búsqueda previa, mostrar la lista completa
+                        }
+
+                        // Función para actualizar la tabla en base al término de búsqueda
+                        async function actualizarTabla(query) {
+                            try {
+                                console.log(`Buscando pacientes con el término: "${query}"`);
+
+                                const response = await fetch(`/api/buscarPaciente?query=${encodeURIComponent(query)}`);
+                                console.log(`Consulta enviada: /api/buscarPaciente?query=${encodeURIComponent(query)}`);
+
+                                if (response.ok) {
+                                    const pacientes = await response.json();
+                                    console.log(`Resultados obtenidos: ${JSON.stringify(pacientes)}`);
+
+                                    // Aquí se llama a renderPage en lugar de renderizarPacientes
+                                    perfiles = pacientes; // Asumiendo que 'perfiles' es el array que se utiliza en renderPage
+                                    renderPage(1); // Renderizar con la página 1
+                                } else {
+                                    console.log('Error en la respuesta de la búsqueda: No se encontraron pacientes');
+                                }
+                            } catch (error) {
+                                console.error('Error al buscar pacientes:', error);
+                            }
+
+                            
+                        }
+
+                        // Para refrescar la tabla en caso de que se haga una nueva búsqueda
+                        document.getElementById('searchButton').addEventListener('click', function (event) {
+                            event.preventDefault(); // Previene el comportamiento predeterminado
+                            const query = document.getElementById('searchInput').value.trim();
+                            actualizarTabla(query); // Llama a actualizarTabla con el nuevo término
+                        });
+
+                        // Permitir búsqueda también al presionar Enter
+                        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault(); // Evita el envío predeterminado
+                                const query = this.value.trim();
+                                actualizarTabla(query); // Llama a actualizarTabla con el nuevo término
+                            }
+                        });
+
+                        localStorage.removeItem('searchQuery');
+                
+                        function renderPage(page) {
+                            const start = (page - 1) * recordsPerPage;
+                            const end = page * recordsPerPage;
+                            const paginaPerfiles = perfiles.slice(start, end);
+                
+                            const tablaPaciente = document.getElementById('tabla-paciente');
+                            tablaPaciente.innerHTML = ''; 
+                            paginaPerfiles.forEach((paciente) => {
+                                const row = document.createElement('tr');
+                
+                                if (paciente.menor === true) {
+                                    paciente.cedula = paciente.cedula_familiar;
+                                }
+                
+                                row.innerHTML = `
+                                    <td class="px-4 py-3 text-sm">${paciente.nombre}</td>
+                                    <td class="px-4 py-3 text-sm">${paciente.apellido}</td>
+                                    <td class="px-4 py-3 text-sm">${paciente.cedula}</td>
+                                    <td class="px-4 py-3 text-sm">${paciente.celular}</td>
+                                    <td class="px-4 py-3 text-sm">${paciente.correo}</td>
+                                    <td class="px-4 py-3 text-sm">${paciente.menor ? 'Menor' : 'Adulto'}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <span class="${paciente.estado ? 'px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100' : 'px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100'}">
+                                            ${paciente.estado ? 'Activo' : 'Inactivo'}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <button class="edit-paciente-btn px-2 py-2 text-sm font-medium text-purple-600" data-id-paciente="${paciente.id_paciente}">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                `;
+                                tablaPaciente.appendChild(row);
+                
+                                row.querySelector('.edit-paciente-btn').addEventListener('click', function (event) {
+                                    const id_paciente = event.currentTarget.getAttribute('data-id-paciente');
+                                    console.log('ID del paciente:', id_paciente); 
+                
+                                    const paciente = perfiles.find(p => p.id_paciente == id_paciente);
+                
+                                    if (paciente) {
+                                        abrirModalEditarPaciente(paciente);
+                                    } else {
+                                        console.error('Paciente no encontrado:', id_paciente);
+                                    }
+                                });
+                            });
+                
+                            document.getElementById('prevButton').disabled = currentPage === 1;
+                            document.getElementById('nextButton').disabled = currentPage * recordsPerPage >= perfiles.length;
+                        }
+                
+                        document.querySelector('.close').addEventListener('click', function () {
+                            document.getElementById('editarPacienteModal').classList.remove('show');
+                            document.getElementById('editarPacienteModal').style.display = 'none';
+                        });
+                
+                        function abrirModalEditarPaciente(paciente) {
+                            if (!paciente) {
+                                console.error('Error: El paciente no está definido');
+                                return;
+                            }
+                
+                            const fechaNacimiento = new Date(paciente.fecha_nacimiento).toISOString().split('T')[0];
+                
+                            document.getElementById('id_paciente').value = paciente.id_paciente;
+                            document.getElementById('editarNombre').value = paciente.nombre;
+                            document.getElementById('editarApellido').value = paciente.apellido;
+                            document.getElementById('editarCedula').value = paciente.cedula;
+                            document.getElementById('editarCorreo').value = paciente.correo;
+                            document.getElementById('editarFechaNacimiento').value = fechaNacimiento; 
+                            document.getElementById('editarSexo').value = paciente.sexo; 
+                            document.getElementById('editarTelefono').value = paciente.telefono;
+                            document.getElementById('editarCelular').value = paciente.celular;
+                            document.getElementById('editarNacionalidad').value = paciente.nacionalidad;
+                            document.getElementById('editarCiudad').value = paciente.ciudad;
+                            document.getElementById('editarDireccion').value = paciente.direccion;
+                            document.getElementById('editarMenor').value = paciente.menor ? 'true' : 'false';
+                            document.getElementById('editarNomFam').value = paciente.nombre_familiar;
+                            document.getElementById('editarCedulaFamiliar').value = paciente.cedula_familiar;
+                            document.getElementById('editarCorreoFamiliar').value = paciente.correo_familiar;
+                            document.getElementById('editarTelefonoFamiliar').value = paciente.telefono_familiar;
+                            document.getElementById('editarCelularFamiliar').value = paciente.celular_familiar;
+                            document.getElementById('editarObservacion').value = paciente.observacion;
+                            document.getElementById('editarEstado').value = paciente.estado ? 'true' : 'false';
+                            
+                
+                            document.getElementById('editarPacienteModal').classList.add('show');
+                            document.getElementById('editarPacienteModal').style.display = 'block';
+                        }
+                
+                        document.getElementById('editarPacienteForm').addEventListener('submit', async function (event) {
+                            event.preventDefault();
+                
+                            const id_paciente = document.getElementById('id_paciente').value;
+                            const datosActualizados = {
+                                nombre: document.getElementById('editarNombre').value,
+                                apellido: document.getElementById('editarApellido').value,
+                                cedula: document.getElementById('editarCedula').value,
+                                fecha_nacimiento: document.getElementById('editarFechaNacimiento').value,
+                                correo: document.getElementById('editarCorreo').value,
+                                sexo: document.getElementById('editarSexo').value,
+                                telefono: document.getElementById('editarTelefono').value,
+                                celular: document.getElementById('editarCelular').value,
+                                nacionalidad: document.getElementById('editarNacionalidad').value,
+                                ciudad: document.getElementById('editarCiudad').value,
+                                direccion: document.getElementById('editarDireccion').value,
+                                menor: document.getElementById('editarMenor').value === 'true',
+                                nombre_familiar: document.getElementById('editarNomFam').value,
+                                cedula_familiar: document.getElementById('editarCedulaFamiliar').value,
+                                correo_familiar: document.getElementById('editarCorreoFamiliar').value,
+                                telefono_familiar: document.getElementById('editarTelefonoFamiliar').value,
+                                celular_familiar: document.getElementById('editarCelularFamiliar').value,
+                                observacion: document.getElementById('editarObservacion').value,
+                                estado: document.getElementById('editarEstado').value === 'true'
+                            };
+                
+                            try {
+                                const response = await fetch(`/api/pacientes/${id_paciente}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(datosActualizados),
+                                });
+                
+                                if (response.ok) {
+                                    document.getElementById('editarPacienteModal').classList.remove('show');
+                                    document.getElementById('editarPacienteModal').style.display = 'none';
+                                    location.reload();
+                                } else {
+                                    const errorMessage = await response.text();
+                                    console.error('Error al actualizar el paciente:', errorMessage);
+                                    alert(`Error al actualizar el paciente: ${errorMessage}`);
+                                }
+                
+                            } catch (error) {
+                                console.error('Error al enviar la solicitud de actualización:', error);
+                            }
+                        });
+                
+                        document.getElementById('searchInput').addEventListener('input', async function () {
+                            const query = this.value.trim();
+                
+                            try {
+                                if (query.length > 0) {
+                                    const response = await fetch(`/api/buscarPaciente?query=${encodeURIComponent(query)}`);
+                                    if (response.ok) {
+                                        perfiles = await response.json();
+                                    } else {
+                                        console.log('No se encontraron pacientes');
+                                    }
+                                } else {
+                                    perfiles = [...allPerfiles]; // Restablecer la lista completa de pacientes si no hay búsqueda
+                                }
+                                currentPage = 1;
+                                renderPage(currentPage); // Volver a renderizar la página actual después de la búsqueda
+                            } catch (error) {
+                                console.error('Error al buscar pacientes:', error);
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+                                
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            console.log(user); 
+
+            document.querySelectorAll('.user-name').forEach(element => {
+                element.textContent = `${user.nombre} ${user.apellido}`;
+            });
+
+            document.getElementById('user-email').textContent = user.correo;
+            document.getElementById('user-fecha-nacimiento').textContent = user.fecha_nacimiento;
+            document.getElementById('user-celular').textContent = user.celular;
+            document.getElementById('user-cedula').textContent = user.cedula;
+        } else {
+           
+            window.location.href = '../login.html';
+        }
+    });
+    </script>
+      
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="logoutButton">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cerrar sesión');
+                    }
+                    // Limpiar cualquier dato relacionado con el usuario
+                    window.location.href = 'login.html'; // Redirigir al login
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cerrar sesión.');
+                });
+                
+        });
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"> </script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../design/js/sb-admin-2.min.js"> </script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../design/js/demo/chart-area-demo.js"></script>
+    <script src="../design/js/demo/chart-pie-demo.js"></script>
+
+</body>
+</html>

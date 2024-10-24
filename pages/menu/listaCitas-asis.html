@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TechMedic - Citas</title>
+    
+    <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="../../design/css/table.css" rel="stylesheet">
+</head>
+
+<style>
+    /* Estilos para el modal */
+    .modal {
+        display: none; /* Ocultarlo por defecto */
+        position: fixed;
+        z-index: 1050; /* Asegura que el modal esté encima de otros elementos */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4); /* Color de fondo */
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto; /* Centra el modal en la pantalla */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 140%; /* Ancho del modal */
+        max-width: 800px; /* Establece un ancho máximo para el modal */
+        height: auto; /* Permite que el modal ajuste su altura automáticamente */
+    }
+    
+    .form-control {
+        margin-bottom: 15px; /* Añadir espacio entre los campos */
+        padding: 12px; /* Aumentar el padding para hacer los campos más grandes */
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn {
+        margin-top: 20px; /* Espacio superior para el botón */
+    }
+
+    /* Estilo del botón de buscar */
+    .btn-buscar {
+        z-index: 1000; /* Asegura que el botón esté por debajo del modal */
+        margin-bottom: 20px; /* Espacio inferior para el botón */
+    }
+</style>
+
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../profileUser.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="../../design/img/logo.png" alt="TechMedic Logo" class="img-fluid">
+                </div>
+                <div class="sidebar-brand-text mx-3">TechMedic</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+              <a class="nav-link" href="../profileUser.html">
+                <i class="fa-solid fa-user-nurse"></i>
+                  <span>Sobre Mi</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>Doctores</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="./menu/listpacient-asis.html">
+                    <i class="fa-solid fa-bed"></i>
+                    <span>Pacientes</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="../menu/listaCitas-asis.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Citas</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../menu/calendarAsis.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Calendario</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Mensajería</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Informaciones</span></a>
+            </li>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="form-container">
+                        <form action="../registerPC-asis.html">
+                            <div class="input-group">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span class="button-text d-none d-lg-inline">Registrar Paciente</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input id="searchInput" class="form-control bg-light border-0 small" placeholder="Búsqueda Paciente..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="searchButton">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Manejar el clic del botón de búsqueda
+                            document.getElementById('searchButton').addEventListener('click', function (event) {
+                                event.preventDefault(); // Previene cualquier comportamiento predeterminado de submit
+                    
+                                // Captura el término de búsqueda del input
+                                const searchQuery = document.getElementById('searchInput').value.trim();
+                                if (searchQuery) {
+                                    localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
+                                    // Redirigir a la página listPaDcAd.html con el término de búsqueda
+                                    window.location.href = `listpacient.html`;
+                                }
+                            });
+                    
+                            // Manejar la pulsación de la tecla 'Enter' en el campo de búsqueda
+                            document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+                                    const searchQuery = document.getElementById('searchInput').value.trim();
+                                    if (searchQuery) {
+                                        localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
+                                        window.location.href = `listpacient.html`; // Redirigir
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="user-name mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../design/img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="perfil_doctor.php">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="container-fluid">
+                    <h1 class="h3 mb-4 text-gray-800">Citas</h1>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Listado de Citas</h6>
+                                </div>
+                                <div class="card-body">
+                                    <main class="h-full pb-16 overflow-y-auto">
+                                        <div class="container grid px-6 mx-auto">
+                                            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                                                <div class="w-full overflow-x-auto">
+                                                    <table class="w-full whitespace-no-wrap">
+                                                        <thead>
+                                                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                                <th class="px-4 py-2">Paciente</th>
+                                                                <th class="px-4 py-3">Doctor</th>
+                                                                <th class="px-4 py-3">Fecha y Hora</th>
+                                                                <th class="px-4 py-3">Acción</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tabla-citas" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-center mt-4">
+                                                <button id="prevButton" class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded" disabled>Anterior</button>
+                                                <button id="nextButton" class="px-4 py-2 bg-gray-300 text-gray-700 rounded">Siguiente</button>
+                                            </div>
+                                        </div>
+                                    </main>
+                                </div>                                                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', async () => {
+                        let currentPage = 1;
+                        const recordsPerPage = 5;
+                        let citas = [];
+                        let allCitas = [];
+                        const user = JSON.parse(localStorage.getItem('user'));
+                
+                        if (!user) {
+                            window.location.href = '../login.html';
+                            return;
+                        }
+                
+                        try {
+                            const response = await fetch(`/api/cita/citasUsuario?id_usuario=${user.id_usuario}`);
+                            citas = await response.json();
+                            allCitas = [...citas]; // Clonar las citas originales
+                            renderPage(currentPage);
+                
+                            document.getElementById('prevButton').addEventListener('click', () => {
+                                if (currentPage > 1) {
+                                    currentPage--;
+                                    renderPage(currentPage);
+                                }
+                            });
+                
+                            document.getElementById('nextButton').addEventListener('click', () => {
+                                if (currentPage * recordsPerPage < allCitas.length) {
+                                    currentPage++;
+                                    renderPage(currentPage);
+                                }
+                            });
+                        } catch (error) {
+                            console.error('Error al obtener las citas:', error);
+                        }
+                
+                        function renderPage(page) {
+                            const start = (page - 1) * recordsPerPage;
+                            const end = page * recordsPerPage;
+                            const paginaCitas = citas.slice(start, end);
+                
+                            const tablaCitas = document.getElementById('tabla-citas');
+                            tablaCitas.innerHTML = ''; 
+                            
+                            paginaCitas.forEach((cita) => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td class="px-4 py-3 text-sm">${cita.nombre_paciente} ${cita.apellido_paciente}</td>
+                                    <td class="px-4 py-3 text-sm">${cita.nombre_doctor} ${cita.apellido_doctor}</td>
+                                    <td class="px-4 py-3 text-sm">${new Date(cita.fecha_hora).toLocaleString()}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <button class="edit-cita-btn px-2 py-2 text-sm font-medium text-purple-600" data-id-cita="${cita.id_cita}">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                `;
+                                tablaCitas.appendChild(row);
+                
+                                row.querySelector('.edit-cita-btn').addEventListener('click', function (event) {
+                                    const id_cita = event.currentTarget.getAttribute('data-id-cita');
+                                    console.log('ID de la cita:', id_cita);
+                
+                                    const citaSeleccionada = citas.find(c => c.id_cita == id_cita);
+                
+                                    if (citaSeleccionada) {
+                                        console.log("Editando cita:", citaSeleccionada);
+                                        // Aquí puedes agregar lógica para abrir un modal o formulario de edición
+                                    } else {
+                                        console.error('Cita no encontrada:', id_cita);
+                                    }
+                                });
+                            });
+                
+                            document.getElementById('prevButton').disabled = currentPage === 1;
+                            document.getElementById('nextButton').disabled = currentPage * recordsPerPage >= allCitas.length;
+                        }
+                    });
+                </script>
+                
+            </div>
+        </div>
+    </div>
+                                
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            console.log(user); 
+
+            document.querySelectorAll('.user-name').forEach(element => {
+                element.textContent = `${user.nombre} ${user.apellido}`;
+            });
+
+            document.getElementById('user-email').textContent = user.correo;
+            document.getElementById('user-fecha-nacimiento').textContent = user.fecha_nacimiento;
+            document.getElementById('user-celular').textContent = user.celular;
+            document.getElementById('user-cedula').textContent = user.cedula;
+        } else {
+           
+            window.location.href = '../login.html';
+        }
+    });
+    </script>
+      
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="logoutButton">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cerrar sesión');
+                    }
+                    // Limpiar cualquier dato relacionado con el usuario
+                    window.location.href = 'login.html'; // Redirigir al login
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cerrar sesión.');
+                });
+                
+        });
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"> </script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../design/js/sb-admin-2.min.js"> </script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../design/js/demo/chart-area-demo.js"></script>
+    <script src="../design/js/demo/chart-pie-demo.js"></script>
+
+</body>
+</html>
