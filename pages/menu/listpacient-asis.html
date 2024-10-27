@@ -11,42 +11,43 @@
     <title>TechMedic - Lista de Pacientes</title>
     
     <script src="https://kit.fontawesome.com/c2b1422a44.js" crossorigin="anonymous"></script>
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="../../design/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../design/css/sb-admin-3.min.css" rel="stylesheet">
-    <link href="../../design/css/table.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/design/css/sb-admin-3.min.css" rel="stylesheet">
+    <link href="/design/css/table.css" rel="stylesheet">
+
 </head>
 
 <style>
-    /* Estilos para el modal */
+  
     .modal {
-        display: none; /* Ocultarlo por defecto */
+        display: none;
         position: fixed;
-        z-index: 1050; /* Asegura que el modal esté encima de otros elementos */
+        z-index: 1050; 
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4); /* Color de fondo */
+        background-color: rgba(0, 0, 0, 0.4); 
     }
     
     .modal-content {
         background-color: #fefefe;
-        margin: auto; /* Centra el modal en la pantalla */
+        margin: auto; 
         padding: 20px;
         border: 1px solid #888;
-        width: 140%; /* Ancho del modal */
-        max-width: 800px; /* Establece un ancho máximo para el modal */
-        height: auto; /* Permite que el modal ajuste su altura automáticamente */
+        width: 140%; 
+        max-width: 800px; 
+        height: auto;
     }
     
     .form-control {
-        margin-bottom: 15px; /* Añadir espacio entre los campos */
-        padding: 12px; /* Aumentar el padding para hacer los campos más grandes */
+        margin-bottom: 15px; 
+        padding: 12px; 
     }
     
     .close {
@@ -64,13 +65,12 @@
     }
 
     .btn {
-        margin-top: 20px; /* Espacio superior para el botón */
+        margin-top: 20px; 
     }
 
-    /* Estilo del botón de buscar */
     .btn-buscar {
-        z-index: 1000; /* Asegura que el botón esté por debajo del modal */
-        margin-bottom: 20px; /* Espacio inferior para el botón */
+        z-index: 1000;
+        margin-bottom: 20px; 
     }
 </style>
 
@@ -170,27 +170,23 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
-                            // Manejar el clic del botón de búsqueda
                             document.getElementById('searchButton').addEventListener('click', function (event) {
-                                event.preventDefault(); // Previene cualquier comportamiento predeterminado de submit
+                                event.preventDefault(); 
                     
-                                // Captura el término de búsqueda del input
                                 const searchQuery = document.getElementById('searchInput').value.trim();
                                 if (searchQuery) {
-                                    localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
-                                    // Redirigir a la página listPaDcAd.html con el término de búsqueda
-                                    window.location.href = `./menu/listpacient.html`;
+                                    localStorage.setItem('searchQuery', searchQuery); 
+                                    window.location.href = `./menu/listpacient-asis.html`;
                                 }
                             });
                     
-                            // Manejar la pulsación de la tecla 'Enter' en el campo de búsqueda
                             document.getElementById('searchInput').addEventListener('keypress', function (e) {
                                 if (e.key === 'Enter') {
-                                    e.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+                                    e.preventDefault(); 
                                     const searchQuery = document.getElementById('searchInput').value.trim();
                                     if (searchQuery) {
-                                        localStorage.setItem('searchQuery', searchQuery); // Guardar el término de búsqueda en localStorage
-                                        window.location.href = `./menu/listpacient.html`; // Redirigir
+                                        localStorage.setItem('searchQuery', searchQuery);
+                                        window.location.href = `./menu/listpacient-asis.html`; 
                                     }
                                 }
                             });
@@ -232,11 +228,11 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="perfil_doctor.php">
+                                <a class="dropdown-item" href="../profileUser.html">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
-                                <a class="dropdown-item" href="configuracion_doctor.php">
+                                <a class="dropdown-item" href="../editarUser.html">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Configuración
                                 </a>
@@ -365,7 +361,6 @@
                                                         </div>
                                                     </div>
                                 
-                                                    <!-- Fila 4 -->
                                                     <div class="form-row">
                                                         <div class="form-group col-md-3">
                                                             <label for="editarNomFam">Nombre de Familiar</label>
@@ -385,7 +380,6 @@
                                                         </div>
                                                     </div>
                                 
-                                                    <!-- Fila 5 -->
                                                     <div class="form-row">
                                                         <div class="form-group col-md-3">
                                                             <label for="editarCelularFamiliar">Celular de Familiar</label>
@@ -421,12 +415,12 @@
                         let currentPage = 1;
                         const recordsPerPage = 5;
                         let perfiles = [];
-                        let allPerfiles = []; // Variable para almacenar todos los pacientes sin filtrar
+                        let allPerfiles = []; 
                 
                         try {
                             const response = await fetch('/api/pacientes');
                             perfiles = await response.json();
-                            allPerfiles = [...perfiles]; // Clonar los perfiles originales para tener siempre todos los pacientes
+                            allPerfiles = [...perfiles]; 
                             renderPage(currentPage);
                 
                             document.getElementById('prevButton').addEventListener('click', () => {
@@ -445,6 +439,58 @@
                         } catch (error) {
                             console.error('Error al obtener los perfiles:', error);
                         }
+
+                        const searchQuery = localStorage.getItem('searchQuery');
+
+                        if (searchQuery) {
+                            document.getElementById('searchInput').value = searchQuery;
+                            actualizarTabla(searchQuery);
+                            localStorage.removeItem('searchQuery'); 
+                        } else {
+                            actualizarTabla(''); 
+                        }
+
+                        async function actualizarTabla(query) {
+                            try {
+                                console.log(`Buscando pacientes con el término: "${query}"`);
+
+                                const response = await fetch(`/api/buscarPaciente?query=${encodeURIComponent(query)}`);
+                                console.log(`Consulta enviada: /api/buscarPaciente?query=${encodeURIComponent(query)}`);
+
+                                if (response.ok) {
+                                    const pacientes = await response.json();
+                                    console.log(`Resultados obtenidos: ${JSON.stringify(pacientes)}`);
+
+                                    perfiles = pacientes;
+                                    renderPage(1); 
+                                } else {
+                                    console.log('Error en la respuesta de la búsqueda: No se encontraron pacientes');
+                                }
+                            } catch (error) {
+                                console.error('Error al buscar pacientes:', error);
+                            }
+
+                            
+                        }
+
+                 
+                        document.getElementById('searchButton').addEventListener('click', function (event) {
+                            event.preventDefault();
+                            const query = document.getElementById('searchInput').value.trim();
+                            actualizarTabla(query); 
+                        });
+
+              
+                        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault(); 
+                                const query = this.value.trim();
+                                actualizarTabla(query); 
+                            }
+                        });
+
+                        localStorage.removeItem('searchQuery');
+                
                 
                         function renderPage(page) {
                             const start = (page - 1) * recordsPerPage;
@@ -601,10 +647,10 @@
                                         console.log('No se encontraron pacientes');
                                     }
                                 } else {
-                                    perfiles = [...allPerfiles]; // Restablecer la lista completa de pacientes si no hay búsqueda
+                                    perfiles = [...allPerfiles]; 
                                 }
                                 currentPage = 1;
-                                renderPage(currentPage); // Volver a renderizar la página actual después de la búsqueda
+                                renderPage(currentPage);
                             } catch (error) {
                                 console.error('Error al buscar pacientes:', error);
                             }
@@ -664,14 +710,13 @@
         document.getElementById('logoutButton').addEventListener('click', function() {
             fetch('/api/logout', {
                     method: 'POST',
-                    credentials: 'include' // Para asegurar que las cookies se envíen correctamente
+                    credentials: 'include' 
                 })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error al cerrar sesión');
                     }
-                    // Limpiar cualquier dato relacionado con el usuario
-                    window.location.href = 'login.html'; // Redirigir al login
+                    window.location.href = '../login.html'; 
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -682,21 +727,22 @@
     </script>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"> </script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"> </script>
+    <script src="/vendor/jquery/jquery.min.js"> </script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../design/js/sb-admin-2.min.js"> </script>
+    <script src="/design/js/sb-admin-2.min.js"> </script>
 
     <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="../design/js/demo/chart-area-demo.js"></script>
-    <script src="../design/js/demo/chart-pie-demo.js"></script>
+    <script src="/design/js/demo/chart-area-demo.js"></script>
+    <script src="/design/js/demo/chart-pie-demo.js"></script>
 
 </body>
 </html>

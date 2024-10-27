@@ -52,7 +52,9 @@ const login = async (req, res) => {
                 celular: user.celular,
                 telefono: user.telefono,
                 cedula: user.cedula,
-                usuario: user.usuario
+                usuario: user.usuario,
+                password: user.password,
+                id_centro_medico: user.id_centro_medico
             }
         });
     } catch (error) {
